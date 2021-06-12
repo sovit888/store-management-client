@@ -1,9 +1,10 @@
 import React from "react";
 import Sidebar from "./sidebar/Sidebar";
 import Topbar from "./topbar/Topbar";
+import Footer from "./footer/Footer";
 import "./layout.css";
 
-const Layout = () => {
+const Layout = ({ children }) => {
   const [collapse, setCollapse] = React.useState(false);
   const handleToggle = () => {
     setCollapse(!collapse);
@@ -13,6 +14,8 @@ const Layout = () => {
       <Sidebar collapse={collapse} />
       <div className={`body ${collapse && "shrink"}`}>
         <Topbar handleToggle={handleToggle} />
+        <div className="body-content">{children}</div>
+        <Footer />
       </div>
       <div
         className={`layout-paper ${collapse && "shrink"}`}

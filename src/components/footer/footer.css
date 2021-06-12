@@ -1,0 +1,19 @@
+.footer {
+  margin-top: auto;
+  height: 50px;
+  padding: 4px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  box-shadow: 0px -1px rgba(0, 0, 0, 0.2);
+  border-top: 1px solid #80808054;
+}
+.footer p {
+  margin-bottom: 0px;
+}
+@media screen and (max-width: 576px) {
+  .footer p {
+    font-size: 12px;
+  }
+}

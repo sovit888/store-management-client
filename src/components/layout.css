@@ -1,6 +1,9 @@
 .body {
   margin-left: var(--sidebar-width);
   transition: 0.4s ease-in-out 0s;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 .body.shrink {
   margin-left: var(--sidebar-collapse-width);
@@ -16,6 +19,11 @@
 }
 .layout-paper.shrink {
   left: -100%;
+}
+.body-content {
+  padding: 10px;
+  flex: 1;
+  background-color: #b8b8c12e;
 }
 @media screen and (max-width: 856px) {
   .body,

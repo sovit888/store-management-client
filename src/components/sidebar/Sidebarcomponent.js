@@ -8,7 +8,7 @@ const NavItem = ({ navlist }) => {
     <DropDown navlist={navlist} />
   ) : (
     <li>
-      <Link to={"/#"}>
+      <Link to={navlist.link}>
         {navlist.icons}
         <span>{navlist.label}</span>
       </Link>
@@ -37,7 +37,7 @@ const DropDown = ({ navlist }) => {
         {navlist.children.map((value, index) => {
           return (
             <li key={index}>
-              <Link to="/#">
+              <Link to={value.link}>
                 <BsCircle />
                 <span>{value.label}</span>
               </Link>
