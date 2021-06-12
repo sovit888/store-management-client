@@ -1,0 +1,108 @@
+.sidebar {
+  height: 100vh;
+  width: var(--sidebar-width);
+  background-color: black;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: 0.3s ease;
+  z-index: 2;
+}
+.sidebar.shrink {
+  width: var(--sidebar-collapse-width);
+}
+
+.sidebar ul {
+  padding: 10px;
+  list-style: none;
+}
+.sidebar ul li a {
+  padding: 6px 0;
+  font-size: 12px;
+  display: flex;
+  position: relative;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  font-family: sans-serif;
+  font-weight: 600;
+  opacity: 0.8;
+  transition: 0.2s ease;
+}
+.sidebar ul li a:hover {
+  opacity: 1;
+}
+.sidebar ul li a span {
+  margin-left: 10px;
+}
+.sidebar ul ul {
+  padding: 0;
+}
+.sidebar ul ul li a svg {
+  width: 8px;
+  height: 8px;
+}
+.sidebar .submenu {
+  max-height: 0;
+  transition: all 0.6s ease-in-out 0s;
+  background-color: #65655e;
+  overflow: hidden;
+}
+.submenu.active {
+  max-height: 300px;
+}
+.sidebar ul li a.active {
+  opacity: 1;
+}
+.rotate {
+  position: absolute;
+  top: 50%;
+  height: 12px;
+  width: 12px;
+  right: 4%;
+  transform: translateY(-50%);
+  transition: 0.3s ease-out;
+}
+.sidebar ul li a.active .rotate {
+  top: 30%;
+  transform: rotateZ(90deg);
+}
+.sidebar.shrink ul li a span {
+  display: none;
+}
+.sidebar.shrink:hover {
+  width: var(--sidebar-width);
+}
+.sidebar.shrink:hover ul li a span {
+  display: block;
+}
+@media screen and (max-width: 856px) {
+  .sidebar {
+    width: var(--sidebar-collapse-width);
+  }
+  .sidebar ul li a span {
+    display: none;
+  }
+  .sidebar:hover {
+    width: var(--sidebar-width);
+  }
+  .sidebar:hover ul li a span {
+    display: block;
+  }
+}
+@media screen and (max-width: 576px) {
+  .sidebar {
+    left: -100%;
+  }
+  .sidebar.shrink {
+    left: 0%;
+  }
+  .sidebar,
+  .sidebar.shrink {
+    width: var(--sidebar-width);
+  }
+  .sidebar.shrink ul li a span,
+  .sidebar ul li a span {
+    display: block;
+  }
+}
