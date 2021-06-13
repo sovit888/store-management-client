@@ -1,0 +1,44 @@
+.btn.custom-btn {
+  font-size: 0.8rem;
+}
+
+.btn.custom-btn:active,
+.btn.custom-btn:focus,
+.btn.custom-btn:hover {
+  box-shadow: 0 0 0 black;
+}
+.btn.custom-btn-primary,
+.btn.custom-btn-primary:hover,
+.btn.custom-btn-primary:focus,
+.btn.custom-btn-primary:active {
+  background-color: #3f6296eb;
+}
+.form-control.custom-input:focus,
+.form-control.custom-input:active {
+  box-shadow: 0 0 2px #3f6296eb;
+  font-family: sans-serif;
+}
+.form-control.custom-input {
+  font-size: 14px;
+}
+.custom-label {
+  font-size: 14px;
+}
+.table-layout {
+  overflow: auto;
+}
+.custom-table.table {
+  min-width: 400px;
+}
+.custom-table.table th,
+.custom-table.table td {
+  cursor: pointer;
+  font-size: 12px;
+}
+.custom-table.table td span {
+  font-size: 10px;
+  border-radius: 5px;
+}
+.custom-table.table thead th {
+  border-color: #ccacac94 !important;
+}
