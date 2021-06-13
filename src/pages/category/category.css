@@ -1,0 +1,11 @@
+.form-control.custom-input:focus,
+.form-control.custom-input:active {
+  box-shadow: 0 0 2px #3f6296eb;
+  font-family: sans-serif;
+}
+.form-control.custom-input {
+  font-size: 14px;
+}
+.custom-label {
+  font-size: 14px;
+}

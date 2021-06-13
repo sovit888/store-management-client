@@ -1,17 +1,17 @@
 import React from "react";
 import { useFormik } from "formik";
-import storeFormValidation from "./storeFormValidation";
+import brandFormValidation from "./brandFormValidation";
 import { Modal, ModalBody } from "reactstrap";
-import StoreForm from "./StoreForm";
+import BrandForm from "./BrandForm";
 
-const ManageStore = ({ status, toggle, store }) => {
+const ManageBrand = ({ status, toggle, brand }) => {
   const formik = useFormik({
     initialValues: {
-      name: store.name || "",
-      status: store.status || false,
+      name: brand.name || "",
+      status: brand.status || false,
     },
     enableReinitialize: true,
-    validationSchema: storeFormValidation,
+    validationSchema: brandFormValidation,
     onSubmit: (values) => {
       values.status = values.status === "true" ? true : false;
       console.log(values);
@@ -23,11 +23,11 @@ const ManageStore = ({ status, toggle, store }) => {
       <Modal isOpen={status}>
         <ModalBody>
           <p className="font-weight-bold mb-0">Update store</p>
-          <StoreForm formik={formik} toggle={toggle} submitValue={"Update"} />
+          <BrandForm formik={formik} toggle={toggle} submitValue={"Update"} />
         </ModalBody>
       </Modal>
     </>
   );
 };
 
-export default ManageStore;
+export default ManageBrand;

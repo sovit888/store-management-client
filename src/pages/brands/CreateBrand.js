@@ -1,10 +1,10 @@
 import React from "react";
 import { useFormik } from "formik";
-import storeFormValidation from "./storeFormValidation";
+import storeFormValidation from "./brandFormValidation";
 import { Modal, ModalBody } from "reactstrap";
-import StoreForm from "./StoreForm";
+import BrandForm from "./BrandForm";
 
-const CreateStore = ({ status, toggle }) => {
+const CreateBrand = ({ status, toggle }) => {
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -23,11 +23,11 @@ const CreateStore = ({ status, toggle }) => {
       <Modal isOpen={status}>
         <ModalBody>
           <p className="font-weight-bold mb-0">Create a New store</p>
-          <StoreForm formik={formik} toggle={toggle} submitValue={"Create"} />
+          <BrandForm formik={formik} toggle={toggle} submitValue={"Create"} />
         </ModalBody>
       </Modal>
     </>
   );
 };
 
-export default CreateStore;
+export default CreateBrand;

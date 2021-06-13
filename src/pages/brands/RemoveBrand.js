@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Modal, ModalBody } from "reactstrap";
 
-const RemoveStore = ({ status, toggle, store }) => {
+const RemoveBrand = ({ status, toggle, brand }) => {
   return (
     <>
       <Modal isOpen={status}>
@@ -19,4 +19,4 @@ const RemoveStore = ({ status, toggle, store }) => {
   );
 };
 
-export default RemoveStore;
+export default RemoveBrand;

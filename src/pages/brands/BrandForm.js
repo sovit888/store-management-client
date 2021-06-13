@@ -8,7 +8,7 @@ import {
   FormFeedback,
 } from "reactstrap";
 
-const StoreForm = ({ formik, toggle, submitValue }) => {
+const BrandForm = ({ formik, toggle, submitValue }) => {
   return (
     <>
       <Form onSubmit={formik.handleSubmit}>
@@ -62,4 +62,4 @@ const StoreForm = ({ formik, toggle, submitValue }) => {
   );
 };
 
-export default StoreForm;
+export default BrandForm;

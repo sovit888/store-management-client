@@ -1,16 +1,16 @@
 import React from "react";
 import { useFormik } from "formik";
-import storeFormValidation from "./storeFormValidation";
+import categoryFormValidation from "./categoryFormValidation";
 import { Modal, ModalBody } from "reactstrap";
-import StoreForm from "./StoreForm";
+import CategoryForm from "./CategoryForm";
 
-const CreateStore = ({ status, toggle }) => {
+const CreateCategory = ({ status, toggle }) => {
   const formik = useFormik({
     initialValues: {
       name: "",
       status: false,
     },
-    validationSchema: storeFormValidation,
+    validationSchema: categoryFormValidation,
     onSubmit: (values, { resetForm }) => {
       values.status = values.status === "true" ? true : false;
       console.log(values);
@@ -22,12 +22,16 @@ const CreateStore = ({ status, toggle }) => {
     <>
       <Modal isOpen={status}>
         <ModalBody>
-          <p className="font-weight-bold mb-0">Create a New store</p>
-          <StoreForm formik={formik} toggle={toggle} submitValue={"Create"} />
+          <p className="font-weight-bold mb-0">Create a New category</p>
+          <CategoryForm
+            formik={formik}
+            toggle={toggle}
+            submitValue={"Create"}
+          />
         </ModalBody>
       </Modal>
     </>
   );
 };
 
-export default CreateStore;
+export default CreateCategory;

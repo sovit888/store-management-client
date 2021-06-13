@@ -1,16 +1,16 @@
 import React from "react";
 import { Table } from "reactstrap";
 import { FaWrench, FaTrashAlt } from "react-icons/fa";
-import RemoveStore from "./RemoveStore";
+import RemoveBrand from "./RemoveBrand";
 
-const storeLists = [
-  { name: "store 1", status: false, id: 1 },
-  { name: "store 2", status: true, id: 2 },
-  { name: "store 3", status: true, id: 3 },
-  { name: "store 4", status: false, id: 4 },
+const brandLists = [
+  { name: "Adidas", status: true, id: 1 },
+  { name: "Nike", status: false, id: 2 },
+  { name: "Puma", status: false, id: 3 },
+  { name: "Vans", status: true, id: 4 },
 ];
 
-const StoreTable = ({ setStore, toggle, store }) => {
+const BrandTable = ({ setBrand, toggle, brand }) => {
   const [removeStatus, setRemoveStatus] = React.useState(false);
   const handleToggle = () => setRemoveStatus(!removeStatus);
   return (
@@ -26,7 +26,7 @@ const StoreTable = ({ setStore, toggle, store }) => {
             </tr>
           </thead>
           <tbody>
-            {storeLists.map((value, index) => {
+            {brandLists.map((value, index) => {
               return (
                 <tr key={index}>
                   <td>{index + 1}</td>
@@ -42,7 +42,7 @@ const StoreTable = ({ setStore, toggle, store }) => {
                     <span
                       className="p-2 bg-primary text-white"
                       onClick={(e) => {
-                        setStore(value);
+                        setBrand(value);
                         toggle(e);
                       }}
                     >
@@ -53,7 +53,7 @@ const StoreTable = ({ setStore, toggle, store }) => {
                     <span
                       className="p-2 text-white bg-danger"
                       onClick={(e) => {
-                        setStore(value);
+                        setBrand(value);
                         handleToggle();
                       }}
                     >
@@ -66,9 +66,9 @@ const StoreTable = ({ setStore, toggle, store }) => {
           </tbody>
         </Table>
       </div>
-      <RemoveStore status={removeStatus} toggle={handleToggle} store={store} />
+      <RemoveBrand status={removeStatus} toggle={handleToggle} brand={brand} />
     </>
   );
 };
 
-export default StoreTable;
+export default BrandTable;

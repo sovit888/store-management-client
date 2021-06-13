@@ -1,7 +1,7 @@
 import React from "react";
 import { Table } from "reactstrap";
 import { FaWrench, FaTrashAlt } from "react-icons/fa";
-import RemoveStore from "./RemoveStore";
+import RemoveCategory from "./RemoveCategory";
 
 const storeLists = [
   { name: "store 1", status: false, id: 1 },
@@ -10,7 +10,7 @@ const storeLists = [
   { name: "store 4", status: false, id: 4 },
 ];
 
-const StoreTable = ({ setStore, toggle, store }) => {
+const CategoryTable = ({ setCategory, toggle, category }) => {
   const [removeStatus, setRemoveStatus] = React.useState(false);
   const handleToggle = () => setRemoveStatus(!removeStatus);
   return (
@@ -42,7 +42,7 @@ const StoreTable = ({ setStore, toggle, store }) => {
                     <span
                       className="p-2 bg-primary text-white"
                       onClick={(e) => {
-                        setStore(value);
+                        setCategory(value);
                         toggle(e);
                       }}
                     >
@@ -53,7 +53,7 @@ const StoreTable = ({ setStore, toggle, store }) => {
                     <span
                       className="p-2 text-white bg-danger"
                       onClick={(e) => {
-                        setStore(value);
+                        setCategory(value);
                         handleToggle();
                       }}
                     >
@@ -66,9 +66,13 @@ const StoreTable = ({ setStore, toggle, store }) => {
           </tbody>
         </Table>
       </div>
-      <RemoveStore status={removeStatus} toggle={handleToggle} store={store} />
+      <RemoveCategory
+        status={removeStatus}
+        toggle={handleToggle}
+        category={category}
+      />
     </>
   );
 };
 
-export default StoreTable;
+export default CategoryTable;
