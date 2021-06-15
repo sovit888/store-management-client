@@ -53,7 +53,11 @@ const BrandForm = ({ formik, toggle, submitValue }) => {
           <Button type="submit" className="custom-btn custom-btn-primary">
             {submitValue}
           </Button>
-          <Button className="ml-auto custom-btn btn-danger" onClick={toggle}>
+          <Button
+            className="ml-auto custom-btn"
+            onClick={toggle}
+            color="danger"
+          >
             Cancel
           </Button>
         </div>

@@ -1,19 +1,14 @@
 import React from "react";
 import { MDBDataTable, MDBTooltip } from "mdbreact";
-import { FaWrench, FaTrashAlt } from "react-icons/fa";
-import RemoveBrand from "./RemoveBrand";
-
-const brandLists = [
-  { name: "Adidas", status: true, id: 1 },
-  { name: "Nike", status: false, id: 2 },
-  { name: "Puma", status: false, id: 3 },
-  { name: "Vans", status: true, id: 4 },
+import { FaTrashAlt, FaPen } from "react-icons/fa";
+const attributeLists = [
+  { name: "Size", status: false, id: 1 },
+  { name: "Colour", status: true, id: 2 },
+  { name: "Shape", status: true, id: 3 },
+  { name: "Type", status: false, id: 4 },
 ];
 
-const BrandTable = ({ setBrand, toggle, brand }) => {
-  const [removeStatus, setRemoveStatus] = React.useState(false);
-  const handleToggle = () => setRemoveStatus(!removeStatus);
-
+const AttributeTable = () => {
   const data = {
     columns: [
       {
@@ -33,7 +28,7 @@ const BrandTable = ({ setBrand, toggle, brand }) => {
       },
     ],
     rows: [
-      ...brandLists.map((value, index) => {
+      ...attributeLists.map((value, index) => {
         return {
           name: value.name,
           status: value.status ? (
@@ -49,27 +44,27 @@ const BrandTable = ({ setBrand, toggle, brand }) => {
                 <span
                   className="p-2 bg-primary text-white"
                   onClick={(e) => {
-                    setBrand(value);
-                    toggle(e);
+                    //   setStore(value);
+                    //   toggle(e);
                   }}
                 >
-                  <FaWrench />
+                  <FaPen />
                 </span>
-                <div>Edit Brand</div>
+                <div>Edit Attribute</div>
               </MDBTooltip>
 
               <span className="mx-1"></span>
-              <MDBTooltip domElement placement="right">
+              <MDBTooltip placement="right" domElement>
                 <span
                   className="p-2 text-white bg-danger"
                   onClick={(e) => {
-                    setBrand(value);
-                    handleToggle();
+                    //   setStore(value);
+                    //   handleToggle();
                   }}
                 >
                   <FaTrashAlt />
                 </span>
-                <div>Delete Brand</div>
+                <div>Delete Attributes</div>
               </MDBTooltip>
             </>
           ),
@@ -81,15 +76,15 @@ const BrandTable = ({ setBrand, toggle, brand }) => {
     <>
       <div className="bg-white my-3 p-1 table-layout">
         <MDBDataTable
+          searching={true}
           sortable={false}
           data={data}
-          entries={4}
           entriesOptions={[4, 7, 10]}
+          entries={4}
         />
       </div>
-      <RemoveBrand status={removeStatus} toggle={handleToggle} brand={brand} />
     </>
   );
 };
 
-export default BrandTable;
+export default AttributeTable;

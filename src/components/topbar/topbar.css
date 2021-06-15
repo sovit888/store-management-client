@@ -27,29 +27,37 @@
 .topbar-left svg {
   cursor: pointer;
 }
-.notification.dropdown button {
-  background-color: transparent;
+.custom-notification.btn {
+  background-color: transparent !important;
+  padding: 0;
   border: 0;
-  color: black;
+  color: black !important;
   outline: none;
+  box-shadow: 0 0 0 transparent !important;
 }
-.notification.dropdown button .badge {
-  color: red;
-  right: 5px;
+.notification.show
+  > .custom-notification.btn.btn-secondary.dropdown-toggle:active {
+  background-color: white !important;
+  box-shadow: 0 0 0 transparent !important;
 }
-.notification.dropdown button:focus {
-  box-shadow: 0 0 0 0 black;
+.custom-notification .badge {
+  color: red !important;
+  background-color: white !important;
+  right: 1px;
+  box-shadow: 0 0px 0px white !important;
+  top: -2%;
+  font-size: 10px;
 }
-.notification.dropdown .dropdown-menu {
-  right: 10%;
+.notification-dropdown-menu.dropdown-menu {
+  left: -170px;
   min-width: 200px;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
 }
-.notification.dropdown .dropdown-menu button {
+.notification-dropdown-menu button {
   font-size: 13px;
   font-family: "Asap", sans-serif;
   transition: 0.2s ease-in-out;
 }
-.notification.dropdown .dropdown-menu button:hover {
+.notification-dropdown-menu button:hover {
   background-color: #a5a19c38;
 }

@@ -1,11 +1,19 @@
 import React from "react";
+import { Card, CardBody, Breadcrumb, BreadcrumbItem } from "reactstrap";
+import ReportChart from "./ReportChart";
 
 const Report = () => {
   return (
     <>
-      <h1>This is a report age</h1>
+      <Breadcrumb>
+        <BreadcrumbItem>Reports</BreadcrumbItem>
+      </Breadcrumb>
+      <Card>
+        <CardBody>
+          <ReportChart />
+        </CardBody>
+      </Card>
     </>
   );
 };
-
 export default Report;

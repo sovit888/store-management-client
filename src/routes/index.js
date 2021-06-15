@@ -12,8 +12,9 @@ import ManageProduct from "../pages/products/ManageProduct";
 import Profile from "../pages/profiles/Profile";
 import Report from "../pages/reports/Report";
 import Store from "../pages/stores/Store";
-import AllUser from "../pages/user/AllUser";
-import ManageUser from "../pages/user/ManageUser";
+import AllUser from "../pages/user/alluser/AllUser";
+import NewUser from "../pages/user/alluser/NewUser";
+import ManageUser from "../pages/user/manageuser/ManageUser";
 import Setting from "../pages/Setting/Setting";
 
 export const privateRoutes = [
@@ -33,5 +34,6 @@ export const privateRoutes = [
   { path: "/store", component: Store },
   { path: "/user/all", component: AllUser },
   { path: "/user/manage", component: ManageUser },
+  { path: "/user/new", component: NewUser },
   { path: "/setting", component: Setting },
 ];

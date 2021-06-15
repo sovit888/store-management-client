@@ -1,0 +1,13 @@
+.profile p span {
+  font-size: 12px;
+  border-radius: 10px;
+  color: white;
+}
+.profile p {
+  font-family: sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+}
+.form-group label {
+  font-size: 14px;
+}

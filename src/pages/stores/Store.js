@@ -22,6 +22,7 @@ const Store = () => {
       </Breadcrumb>
       <Button
         className="custom-btn custom-btn-primary"
+        color="primary"
         onClick={handleCreateStatus}
       >
         Add Store

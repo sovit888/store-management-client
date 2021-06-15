@@ -15,11 +15,11 @@ const Notification = () => {
   return (
     <>
       <Dropdown isOpen={dropdownOpen} toggle={toggle} className="notification">
-        <DropdownToggle>
+        <DropdownToggle className="custom-notification">
           <FaBell />
           <Badge color="secondary">4</Badge>
         </DropdownToggle>
-        <DropdownMenu>
+        <DropdownMenu className="notification-dropdown-menu">
           <DropdownItem className="text-center">15 Notification</DropdownItem>
           <DropdownItem divider />
           <DropdownItem>Header</DropdownItem>
