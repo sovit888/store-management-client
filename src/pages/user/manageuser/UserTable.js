@@ -26,7 +26,7 @@ const userLists = [
   },
 ];
 
-const UserTable = () => {
+const UserTable = ({ updateUser, removeUser, setUser }) => {
   const data = {
     columns: [
       {
@@ -62,8 +62,8 @@ const UserTable = () => {
                 <span
                   className="p-2 bg-primary text-white"
                   onClick={(e) => {
-                    // setCategory(value);
-                    // toggle(e);
+                    updateUser();
+                    setUser(value);
                   }}
                 >
                   <FaPen />
@@ -76,8 +76,8 @@ const UserTable = () => {
                 <span
                   className="p-2 text-white bg-danger"
                   onClick={(e) => {
-                    // setCategory(value);
-                    // handleToggle();
+                    setUser(value);
+                    removeUser();
                   }}
                 >
                   <FaTrashAlt />
