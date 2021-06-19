@@ -30,12 +30,15 @@ const NewGroup = () => {
     <>
       <Form onSubmit={formik.handleSubmit} className="p-4 bg-white">
         <FormGroup>
-          <Label for="groupname">Name</Label>
+          <Label for="groupname" className="custom-label">
+            Name
+          </Label>
           <Input
             type="text"
             name="name"
             id="groupname"
             value={formik.values.name}
+            className="custom-input"
             onChange={formik.handleChange}
             invalid={formik.touched.name && formik.errors.name ? true : false}
           />

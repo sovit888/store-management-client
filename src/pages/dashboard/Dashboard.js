@@ -9,7 +9,7 @@ import User from "./User";
 const Dashboard = () => {
   return (
     <>
-      <div className="bg-white p-2">
+      <div className="bg-white p-3">
         <Row>
           <Col sm={12} md={6} lg={3}>
             <div className="dashboard-item success-color">
