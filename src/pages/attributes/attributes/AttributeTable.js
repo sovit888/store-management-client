@@ -1,14 +1,14 @@
 import React from "react";
 import { MDBDataTable, MDBTooltip } from "mdbreact";
-import { FaTrashAlt, FaPen } from "react-icons/fa";
+import { FaTrashAlt, FaPen, FaPlus } from "react-icons/fa";
+import { Link } from "react-router-dom";
 const attributeLists = [
-  { name: "Size", status: false, id: 1 },
-  { name: "Colour", status: true, id: 2 },
-  { name: "Shape", status: true, id: 3 },
-  { name: "Type", status: false, id: 4 },
+  { name: "Size", status: false, _id: 1 },
+  { name: "Colour", status: true, _id: 2 },
+  { name: "Shape", status: true, _id: 3 },
 ];
 
-const AttributeTable = () => {
+const AttributeTable = ({ setAttribute, handleUpdate, handleRemove }) => {
   const data = {
     columns: [
       {
@@ -41,11 +41,20 @@ const AttributeTable = () => {
           operations: (
             <>
               <MDBTooltip domElement placement="left">
+                <Link to={`/attribute/${value._id}`} className="mr-2">
+                  <span className="p-2 bg-default text-white">
+                    <FaPlus />
+                  </span>
+                </Link>
+                <div>Add Values</div>
+              </MDBTooltip>
+
+              <MDBTooltip domElement placement="top">
                 <span
                   className="p-2 bg-primary text-white"
                   onClick={(e) => {
-                    //   setStore(value);
-                    //   toggle(e);
+                    setAttribute(value);
+                    handleUpdate();
                   }}
                 >
                   <FaPen />
@@ -58,8 +67,8 @@ const AttributeTable = () => {
                 <span
                   className="p-2 text-white bg-danger"
                   onClick={(e) => {
-                    //   setStore(value);
-                    //   handleToggle();
+                    setAttribute(value);
+                    handleRemove();
                   }}
                 >
                   <FaTrashAlt />

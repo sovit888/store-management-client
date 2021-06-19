@@ -1,4 +1,5 @@
-import Attribute from "../pages/attributes/Attribute";
+import Attribute from "../pages/attributes/attributes/Attribute";
+import AttributeValue from "../pages/attributes/values/AttributeValue";
 import Brand from "../pages/brands/Brand";
 import Category from "../pages/category/Category";
 import Company from "../pages/company/Company";
@@ -21,23 +22,32 @@ import Setting from "../pages/Setting/Setting";
 
 export const privateRoutes = [
   { path: "/", component: Dashboard },
-  { path: "/attribute", component: Attribute },
-  { path: "/brand", component: Brand },
-  { path: "/category", component: Category },
+  { path: "/attribute", component: Attribute, permissions: "attributes" },
+  {
+    path: "/attribute/:id",
+    component: AttributeValue,
+    permissions: "attributes",
+  },
+  { path: "/brand", component: Brand, permissions: "attributes" },
+  { path: "/category", component: Category, permissions: "attributes" },
   { path: "/company", component: Company },
-  { path: "/group/all", component: AllGroup },
-  { path: "/group/manage", component: ManageGroup },
-  { path: "/group/new", component: NewGroup },
-  { path: "/group/:id", component: UpdateGroup },
-  { path: "/order/all", component: AllOrder },
-  { path: "/order/manage", component: ManageOrder },
-  { path: "/product/all", component: AllProduct },
-  { path: "/product/manage", component: ManageProduct },
+  { path: "/group/all", component: AllGroup, permissions: "attributes" },
+  { path: "/group/manage", component: ManageGroup, permissions: "attributes" },
+  { path: "/group/new", component: NewGroup, permissions: "attributes" },
+  { path: "/group/:id", component: UpdateGroup, permissions: "attributes" },
+  { path: "/order/all", component: AllOrder, permissions: "attributes" },
+  { path: "/order/manage", component: ManageOrder, permissions: "attributes" },
+  { path: "/product/all", component: AllProduct, permissions: "attributes" },
+  {
+    path: "/product/manage",
+    component: ManageProduct,
+    permissions: "attributes",
+  },
   { path: "/profile", component: Profile },
   { path: "/report", component: Report },
-  { path: "/store", component: Store },
-  { path: "/user/all", component: AllUser },
-  { path: "/user/manage", component: ManageUser },
-  { path: "/user/new", component: NewUser },
+  { path: "/store", component: Store, permissions: "attributes" },
+  { path: "/user/all", component: AllUser, permissions: "attributes" },
+  { path: "/user/manage", component: ManageUser, permissions: "attributes" },
+  { path: "/user/new", component: NewUser, permissions: "attributes" },
   { path: "/setting", component: Setting },
 ];

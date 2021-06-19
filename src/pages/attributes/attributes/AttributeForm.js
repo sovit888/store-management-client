@@ -8,7 +8,7 @@ import {
   Form,
 } from "reactstrap";
 
-const ValueForm = ({ formik, submitValue, toggle }) => {
+const AttributeForm = ({ formik, submitValue, toggle }) => {
   return (
     <>
       <Form onSubmit={formik.handleSubmit}>
@@ -64,4 +64,4 @@ const ValueForm = ({ formik, submitValue, toggle }) => {
   );
 };
 
-export default ValueForm;
+export default AttributeForm;

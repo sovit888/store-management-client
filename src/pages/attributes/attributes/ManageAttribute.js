@@ -1,34 +1,37 @@
 import React from "react";
 import { useFormik } from "formik";
 import { ModalBody, Modal } from "reactstrap";
-import valueValidation from "./valueValidation";
-import ValueForm from "./ValueForm";
+import attributeValidation from "./attributeValidation";
+import AttributeForm from "./AttributeForm";
 
-const ManageValue = ({ status, toggle, value }) => {
+const ManageAttribute = ({ status, toggle, attribute }) => {
   const formik = useFormik({
     initialValues: {
-      name: value.name || "",
-      status: value.status || false,
+      name: attribute.name || "",
+      status: attribute.status || false,
     },
     enableReinitialize: true,
-    validationSchema: valueValidation,
+    validationSchema: attributeValidation,
     onSubmit: (values, { resetForm }) => {
       values.status = values.status === "true" ? true : false;
       console.log(values);
       resetForm();
-      toggle();
     },
   });
   return (
     <>
       <Modal isOpen={status}>
         <ModalBody>
-          <p>Create a New Values</p>
-          <ValueForm formik={formik} toggle={toggle} submitValue={"Update"} />
+          <p>Create a New Attribute</p>
+          <AttributeForm
+            formik={formik}
+            toggle={toggle}
+            submitValue={"Update"}
+          />
         </ModalBody>
       </Modal>
     </>
   );
 };
 
-export default ManageValue;
+export default ManageAttribute;

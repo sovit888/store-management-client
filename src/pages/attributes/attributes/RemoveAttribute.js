@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, ModalBody, Button } from "reactstrap";
 
-const RemoveValue = ({ status, toggle, value }) => {
+const RemoveAttribute = ({ status, toggle }) => {
   const handleConfirm = () => {
     toggle();
   };
@@ -28,4 +28,4 @@ const RemoveValue = ({ status, toggle, value }) => {
   );
 };
 
-export default RemoveValue;
+export default RemoveAttribute;
