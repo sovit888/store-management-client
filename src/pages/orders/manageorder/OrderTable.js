@@ -74,7 +74,7 @@ const OrderTable = () => {
           operations: (
             <>
               <MDBTooltip domElement placement="left">
-                <Link to={`/attribute/${value._id}`} className="mr-2">
+                <Link to={`/order/${value._id}`} className="mr-2">
                   <span className="p-2 bg-default text-white">
                     <FaPrint />
                   </span>

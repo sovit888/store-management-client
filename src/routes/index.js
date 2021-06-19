@@ -10,6 +10,7 @@ import ManageGroup from "../pages/groups/managegroup/ManageGroup";
 import UpdateGroup from "../pages/groups/managegroup/UpdateGroup";
 import AddOrder from "../pages/orders/addorder/AddOrder";
 import ManageOrder from "../pages/orders/manageorder/ManageOrder";
+import PrintOrder from "../pages/orders/manageorder/PrintOrder";
 import AllProduct from "../pages/products/allproducts/AllProduct";
 import NewProduct from "../pages/products/allproducts/NewProduct";
 import ManageProduct from "../pages/products/manageproducts/ManageProduct";
@@ -20,6 +21,7 @@ import AllUser from "../pages/user/alluser/AllUser";
 import NewUser from "../pages/user/alluser/NewUser";
 import ManageUser from "../pages/user/manageuser/ManageUser";
 import Setting from "../pages/Setting/Setting";
+import Login from "../pages/auth/login/Login";
 
 export const privateRoutes = [
   { path: "/", component: Dashboard },
@@ -38,6 +40,7 @@ export const privateRoutes = [
   { path: "/group/:id", component: UpdateGroup, permissions: "attributes" },
   { path: "/order/add", component: AddOrder, permissions: "attributes" },
   { path: "/order/manage", component: ManageOrder, permissions: "attributes" },
+  { path: "/order/:id", component: PrintOrder, permissions: "attributes" },
   { path: "/product/all", component: AllProduct, permissions: "attributes" },
   { path: "/product/new", component: NewProduct, permissions: "attributes" },
   {
@@ -53,3 +56,5 @@ export const privateRoutes = [
   { path: "/user/new", component: NewUser, permissions: "attributes" },
   { path: "/setting", component: Setting },
 ];
+
+export const guestRoutes = [{ path: "/login", component: Login }];

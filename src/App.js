@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter, Switch } from "react-router-dom";
-import { privateRoutes } from "./routes/index";
+import { privateRoutes, guestRoutes } from "./routes/index";
 import PrivateRoute from "./routes/PrivateRoute";
+import GuestRoute from "./routes/GuestRoute";
 
 const App = () => {
   return (
@@ -11,6 +12,16 @@ const App = () => {
           {privateRoutes.map((value, index) => {
             return (
               <PrivateRoute
+                exact
+                path={value.path}
+                component={value.component}
+                key={index}
+              />
+            );
+          })}
+          {guestRoutes.map((value, index) => {
+            return (
+              <GuestRoute
                 exact
                 path={value.path}
                 component={value.component}
