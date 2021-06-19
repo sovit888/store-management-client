@@ -10,16 +10,17 @@ import {
   FormFeedback,
 } from "reactstrap";
 
-const NewGroup = () => {
+const GroupForm = ({ group }) => {
   const formik = useFormik({
     initialValues: {
-      name: "",
-      attributes: false,
-      brands: false,
-      categorys: false,
-      products: false,
-      stores: false,
+      name: group.name || "",
+      attributes: group.attributes || false,
+      brands: group.brands || false,
+      categorys: group.categorys || false,
+      products: group.products || false,
+      stores: group.stores || false,
     },
+    enableReinitialize: true,
     validationSchema: groupValidation,
     onSubmit: (values, { resetForm }) => {
       console.log(values);
@@ -45,13 +46,13 @@ const NewGroup = () => {
               : ""}
           </FormFeedback>
         </FormGroup>
-        <CheckGroup name={"groups"} label={"Groups"} formik={formik} />
+        <CheckGroup name={"stores"} label={"Stores"} formik={formik} />
         <CheckGroup name={"brands"} label={"Brands"} formik={formik} />
         <CheckGroup name={"categorys"} label={"Categorys"} formik={formik} />
         <CheckGroup name={"products"} label={"Products"} formik={formik} />
         <CheckGroup name={"attributes"} label={"Attributes"} formik={formik} />
-        <Button type="submit" className="custom-btn custom-btn-primary mt-2">
-          Create
+        <Button type="submit" className="custom-btn mt-2" color="primary">
+          Update
         </Button>
       </Form>
     </>
@@ -74,4 +75,4 @@ const CheckGroup = ({ name, label, formik }) => {
   );
 };
 
-export default NewGroup;
+export default GroupForm;

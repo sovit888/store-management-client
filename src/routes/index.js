@@ -6,6 +6,7 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import AllGroup from "../pages/groups/allgroup/AllGroup";
 import NewGroup from "../pages/groups/allgroup/NewGroup";
 import ManageGroup from "../pages/groups/managegroup/ManageGroup";
+import UpdateGroup from "../pages/groups/managegroup/UpdateGroup";
 import AllOrder from "../pages/orders/AllOrder";
 import ManageOrder from "../pages/orders/ManageOrder";
 import AllProduct from "../pages/products/AllProduct";
@@ -27,6 +28,7 @@ export const privateRoutes = [
   { path: "/group/all", component: AllGroup },
   { path: "/group/manage", component: ManageGroup },
   { path: "/group/new", component: NewGroup },
+  { path: "/group/:id", component: UpdateGroup },
   { path: "/order/all", component: AllOrder },
   { path: "/order/manage", component: ManageOrder },
   { path: "/product/all", component: AllProduct },

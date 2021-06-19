@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
+import { Breadcrumb, BreadcrumbItem } from "reactstrap";
+import GroupTable from "./GroupTable";
+import RemoveGroup from "./RemoveGroup";
 
 const ManageGroup = () => {
+  const [group, setGroup] = React.useState({});
+  const [removeGroup, setRemoveGroup] = useState(false);
+  const handleRemove = () => setRemoveGroup(!removeGroup);
   return (
     <>
-      <h1>This is a manage group page</h1>
+      <Breadcrumb>
+        <BreadcrumbItem>Manage Groups</BreadcrumbItem>
+      </Breadcrumb>
+      <GroupTable toggle={handleRemove} setGroup={setGroup} />
+      <RemoveGroup group={group} status={removeGroup} toggle={handleRemove} />
     </>
   );
 };

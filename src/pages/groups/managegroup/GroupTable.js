@@ -1,8 +1,11 @@
 import React from "react";
-import { MDBDataTable } from "mdbreact";
+import { MDBDataTable, MDBTooltip } from "mdbreact";
+import { FaPen, FaTrashAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const groupLists = [
   {
+    _id: 1,
     name: "Staff",
     products: true,
     categorys: false,
@@ -20,7 +23,7 @@ const show = (status) => {
   );
 };
 
-const GroupTable = () => {
+const GroupTable = ({ toggle, setGroup }) => {
   const data = {
     columns: [
       {
@@ -53,6 +56,11 @@ const GroupTable = () => {
         field: "attributes",
         width: 100,
       },
+      {
+        label: "Operations",
+        field: "operations",
+        width: 100,
+      },
     ],
     rows: [
       ...groupLists.map((value) => {
@@ -63,6 +71,32 @@ const GroupTable = () => {
           brands: show(value.brands),
           stores: show(value.stores),
           attributes: show(value.attributes),
+          operations: (
+            <>
+              <MDBTooltip placement="left" domElement>
+                <Link to={`/group/${value._id}`}>
+                  <span className="p-2 bg-primary text-white">
+                    <FaPen />
+                  </span>
+                </Link>
+                <div>Edit Group</div>
+              </MDBTooltip>
+
+              <span className="mx-1"></span>
+              <MDBTooltip placement="right" domElement>
+                <span
+                  className="p-2 text-white bg-danger"
+                  onClick={(e) => {
+                    setGroup(value);
+                    toggle();
+                  }}
+                >
+                  <FaTrashAlt />
+                </span>
+                <div>Delete Group</div>
+              </MDBTooltip>
+            </>
+          ),
         };
       }),
     ],
