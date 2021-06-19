@@ -8,9 +8,10 @@ import AllGroup from "../pages/groups/allgroup/AllGroup";
 import NewGroup from "../pages/groups/allgroup/NewGroup";
 import ManageGroup from "../pages/groups/managegroup/ManageGroup";
 import UpdateGroup from "../pages/groups/managegroup/UpdateGroup";
-import AllOrder from "../pages/orders/AllOrder";
-import ManageOrder from "../pages/orders/ManageOrder";
+import AddOrder from "../pages/orders/addorder/AddOrder";
+import ManageOrder from "../pages/orders/manageorder/ManageOrder";
 import AllProduct from "../pages/products/allproducts/AllProduct";
+import NewProduct from "../pages/products/allproducts/NewProduct";
 import ManageProduct from "../pages/products/manageproducts/ManageProduct";
 import Profile from "../pages/profiles/Profile";
 import Report from "../pages/reports/Report";
@@ -35,9 +36,10 @@ export const privateRoutes = [
   { path: "/group/manage", component: ManageGroup, permissions: "attributes" },
   { path: "/group/new", component: NewGroup, permissions: "attributes" },
   { path: "/group/:id", component: UpdateGroup, permissions: "attributes" },
-  { path: "/order/all", component: AllOrder, permissions: "attributes" },
+  { path: "/order/add", component: AddOrder, permissions: "attributes" },
   { path: "/order/manage", component: ManageOrder, permissions: "attributes" },
   { path: "/product/all", component: AllProduct, permissions: "attributes" },
+  { path: "/product/new", component: NewProduct, permissions: "attributes" },
   {
     path: "/product/manage",
     component: ManageProduct,

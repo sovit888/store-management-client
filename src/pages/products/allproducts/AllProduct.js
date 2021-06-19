@@ -10,7 +10,7 @@ const AllProduct = () => {
         <BreadcrumbItem>All Products</BreadcrumbItem>
       </Breadcrumb>
       <Link
-        to={"/group/new"}
+        to={"/product/new"}
         className="custom-btn btn  text-white custom-btn-primary mb-3"
       >
         Add New Products

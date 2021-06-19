@@ -52,7 +52,7 @@ const NavLists = [
     label: "Orders",
     icons: <FaDollarSign />,
     children: [
-      { label: "All Orders", link: "/order/all" },
+      { label: "Add Order", link: "/order/add" },
       { label: "Manage Orders", link: "/order/manage" },
     ],
   },

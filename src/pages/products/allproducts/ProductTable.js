@@ -1,41 +1,64 @@
 import React from "react";
 import { MDBDataTable } from "mdbreact";
 
-const productLists = [];
+const productLists = [
+  {
+    price: 200,
+    quantity: 20,
+    sku: "blue-shirt small",
+    store: "Krishna Grocery",
+    image: "",
+  },
+];
+const show = (status) => {
+  return status ? (
+    <span className="bg-success p-1 text-white rounded-border">Yes</span>
+  ) : (
+    <span className="bg-warning p-1 rounded-border">No</span>
+  );
+};
 
 const ProductTable = () => {
   const data = {
     columns: [
       {
-        label: "Name",
-        field: "name",
+        label: "Image",
+        field: "image",
         width: 230,
       },
       {
-        label: "Stores",
-        field: "stores",
+        label: "SKU",
+        field: "sku",
         width: 200,
       },
       {
-        label: "Categorys",
-        field: "categorys",
+        label: "Store",
+        field: "store",
+        width: 100,
+      },
+      {
+        label: "Quantity",
+        field: "quantity",
         width: 200,
       },
       {
-        label: "Brands",
-        field: "brands",
+        label: "Availability",
+        field: "availability",
         width: 170,
       },
-      {
-        label: "Products",
-        field: "products",
-        width: 100,
-      },
-      {
-        label: "Attributes",
-        field: "attributes",
-        width: 100,
-      },
+    ],
+    rows: [
+      ...productLists.map((value) => {
+        return {
+          image: (
+            <img src={value.image} alt="Products" width={20} height={20} />
+          ),
+          sku: value.sku,
+          store: value.store,
+          quantity: value.quantity,
+          availability: show(value.quantity > 0),
+        };
+      }),
     ],
   };
   return (
