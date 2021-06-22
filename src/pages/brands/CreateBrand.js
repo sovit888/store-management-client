@@ -1,20 +1,23 @@
 import React from "react";
 import { useFormik } from "formik";
-import storeFormValidation from "./brandFormValidation";
+import brandFormValidation from "./brandFormValidation";
 import { Modal, ModalBody } from "reactstrap";
 import BrandForm from "./BrandForm";
+import { createBrand } from "../../store/action";
+import { connect } from "react-redux";
 
-const CreateBrand = ({ status, toggle }) => {
+const CreateBrand = ({ status, toggle, newBrand }) => {
   const formik = useFormik({
     initialValues: {
       name: "",
       status: false,
     },
-    validationSchema: storeFormValidation,
+    validationSchema: brandFormValidation,
     onSubmit: (values, { resetForm }) => {
       values.status = values.status === "true" ? true : false;
-      console.log(values);
+      newBrand(values);
       resetForm();
+      toggle();
     },
   });
 
@@ -29,5 +32,10 @@ const CreateBrand = ({ status, toggle }) => {
     </>
   );
 };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    newBrand: (brand) => dispatch(createBrand(brand)),
+  };
+};
 
-export default CreateBrand;
+export default connect(null, mapDispatchToProps)(CreateBrand);

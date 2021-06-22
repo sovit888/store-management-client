@@ -3,8 +3,10 @@ import { useFormik } from "formik";
 import storeFormValidation from "./storeFormValidation";
 import { Modal, ModalBody } from "reactstrap";
 import StoreForm from "./StoreForm";
+import { connect } from "react-redux";
+import { createStore } from "../../store/action";
 
-const CreateStore = ({ status, toggle }) => {
+const CreateStore = ({ status, toggle, newStore }) => {
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -13,8 +15,9 @@ const CreateStore = ({ status, toggle }) => {
     validationSchema: storeFormValidation,
     onSubmit: (values, { resetForm }) => {
       values.status = values.status === "true" ? true : false;
-      console.log(values);
+      newStore(values);
       resetForm();
+      toggle();
     },
   });
 
@@ -29,5 +32,9 @@ const CreateStore = ({ status, toggle }) => {
     </>
   );
 };
-
-export default CreateStore;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    newStore: (payload) => dispatch(createStore(payload)),
+  };
+};
+export default connect(null, mapDispatchToProps)(CreateStore);

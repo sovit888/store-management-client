@@ -4,8 +4,19 @@ import {
   GET_STORES_LOADING,
   GET_STORES_SUCCESS,
   GET_STORES_ERROR,
+  CREATE_STORES,
+  CREATE_STORES_SUCCESS,
+  UPDATE_STORES,
+  UPDATE_STORES_SUCCESS,
+  DELETE_STORES_SUCCESS,
+  DELETE_STORES,
 } from "./actionType";
-import { getStoreApi } from "./api";
+import {
+  getStoreApi,
+  createStoreApi,
+  updateStoreApi,
+  deleteStoreApi,
+} from "./api";
 
 function* getStoresAsync() {
   yield put({ type: GET_STORES_LOADING });
@@ -22,12 +33,50 @@ function* getStoresAsync() {
   }
 }
 
+function* createStoresAsync({ payload }) {
+  try {
+    const { data } = yield call(createStoreApi, payload);
+    if (data) {
+      yield put({ type: CREATE_STORES_SUCCESS, payload: data.store });
+    }
+  } catch (error) {}
+}
+
+function* updateStoresAsync({ payload }) {
+  try {
+    const { data } = yield call(updateStoreApi, payload);
+    if (data) {
+      yield put({ type: UPDATE_STORES_SUCCESS, payload: data.store });
+    }
+  } catch (error) {}
+}
+
+function* deleteStoresAsync({ payload }) {
+  console.log(payload);
+  try {
+    const { data } = yield call(deleteStoreApi, payload);
+    console.log(data);
+    if (data) {
+      yield put({ type: DELETE_STORES_SUCCESS, payload: data.store });
+    }
+  } catch (error) {}
+}
+
 function* getStores() {
   yield takeEvery(GET_STORES, getStoresAsync);
 }
+function* createStores() {
+  yield takeEvery(CREATE_STORES, createStoresAsync);
+}
+function* updateStores() {
+  yield takeEvery(UPDATE_STORES, updateStoresAsync);
+}
+function* deleteStores() {
+  yield takeEvery(DELETE_STORES, deleteStoresAsync);
+}
 
 function* storeSaga() {
-  yield all([getStores()]);
+  yield all([getStores(), createStores(), updateStores(), deleteStores()]);
 }
 
 export default storeSaga;

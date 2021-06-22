@@ -4,8 +4,19 @@ import {
   GET_BRANDS_LOADING,
   GET_BRANDS_SUCCESS,
   GET_BRANDS_ERROR,
+  CREATE_BRANDS,
+  CREATE_BRANDS_SUCCESS,
+  UPDATE_BRANDS,
+  UPDATE_BRANDS_SUCCESS,
+  DELETE_BRANDS,
+  DELETE_BRANDS_SUCCESS,
 } from "./actionType";
-import { getBrandApi } from "./api";
+import {
+  getBrandApi,
+  createBrandApi,
+  updateBrandApi,
+  deleteBrandApi,
+} from "./api";
 
 function* getBrandsAsync() {
   yield put({ type: GET_BRANDS_LOADING });
@@ -21,12 +32,50 @@ function* getBrandsAsync() {
   }
 }
 
+function* createBrandsAsync({ payload }) {
+  try {
+    const { data } = yield call(createBrandApi, payload);
+    if (data) {
+      yield put({ type: CREATE_BRANDS_SUCCESS, payload: data.brand });
+    }
+  } catch (error) {}
+}
+
+function* updateBrandsAsync({ payload }) {
+  try {
+    const { data } = yield call(updateBrandApi, payload);
+    if (data) {
+      yield put({ type: UPDATE_BRANDS_SUCCESS, payload: data.brand });
+    }
+  } catch (error) {}
+}
+
+function* deleteBrandsAsync({ payload }) {
+  console.log(payload);
+  try {
+    const { data } = yield call(deleteBrandApi, payload);
+    console.log(data);
+    if (data) {
+      yield put({ type: DELETE_BRANDS_SUCCESS, payload: data.brand });
+    }
+  } catch (error) {}
+}
+
 function* getBrands() {
   yield takeEvery(GET_BRANDS, getBrandsAsync);
 }
+function* createBrands() {
+  yield takeEvery(CREATE_BRANDS, createBrandsAsync);
+}
+function* updateBrands() {
+  yield takeEvery(UPDATE_BRANDS, updateBrandsAsync);
+}
+function* deleteBrands() {
+  yield takeEvery(DELETE_BRANDS, deleteBrandsAsync);
+}
 
 function* brandSaga() {
-  yield all([getBrands()]);
+  yield all([getBrands(), createBrands(), updateBrands(), deleteBrands()]);
 }
 
 export default brandSaga;

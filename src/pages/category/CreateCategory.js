@@ -3,8 +3,10 @@ import { useFormik } from "formik";
 import categoryFormValidation from "./categoryFormValidation";
 import { Modal, ModalBody } from "reactstrap";
 import CategoryForm from "./CategoryForm";
+import { connect } from "react-redux";
+import { createCategory } from "../../store/action";
 
-const CreateCategory = ({ status, toggle }) => {
+const CreateCategory = ({ status, toggle, newCategory }) => {
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -13,8 +15,9 @@ const CreateCategory = ({ status, toggle }) => {
     validationSchema: categoryFormValidation,
     onSubmit: (values, { resetForm }) => {
       values.status = values.status === "true" ? true : false;
-      console.log(values);
+      newCategory(values);
       resetForm();
+      toggle();
     },
   });
 
@@ -34,4 +37,10 @@ const CreateCategory = ({ status, toggle }) => {
   );
 };
 
-export default CreateCategory;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    newCategory: (payload) => dispatch(createCategory(payload)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(CreateCategory);

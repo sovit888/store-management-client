@@ -4,8 +4,19 @@ import {
   GET_CATEGORYS_LOADING,
   GET_CATEGORYS_SUCCESS,
   GET_CATEGORYS_ERROR,
+  CREATE_CATEGORYS_SUCCESS,
+  CREATE_CATEGORYS,
+  UPDATE_CATEGORYS,
+  UPDATE_CATEGORYS_SUCCESS,
+  DELETE_CATEGORYS_SUCCESS,
+  DELETE_CATEGORYS,
 } from "./actionType";
-import { getCategoryApi } from "./api";
+import {
+  getCategoryApi,
+  createCategoryApi,
+  updateCategoryApi,
+  deleteCategoryApi,
+} from "./api";
 
 function* getCategorysAsync() {
   yield put({ type: GET_CATEGORYS_LOADING });
@@ -20,13 +31,55 @@ function* getCategorysAsync() {
     yield put({ type: GET_CATEGORYS_ERROR, payload: "Error" });
   }
 }
+function* createCategorysAsync({ payload }) {
+  try {
+    const { data } = yield call(createCategoryApi, payload);
+    if (data) {
+      yield put({ type: CREATE_CATEGORYS_SUCCESS, payload: data.category });
+    }
+  } catch (error) {}
+}
+
+function* updateCategorysAsync({ payload }) {
+  try {
+    const { data } = yield call(updateCategoryApi, payload);
+    if (data) {
+      yield put({ type: UPDATE_CATEGORYS_SUCCESS, payload: data.category });
+    }
+  } catch (error) {}
+}
+
+function* deleteCategorysAsync({ payload }) {
+  console.log(payload);
+  try {
+    const { data } = yield call(deleteCategoryApi, payload);
+    console.log(data);
+    if (data) {
+      yield put({ type: DELETE_CATEGORYS_SUCCESS, payload: data.category });
+    }
+  } catch (error) {}
+}
 
 function* getCategorys() {
   yield takeEvery(GET_CATEGORYS, getCategorysAsync);
 }
+function* createCategorys() {
+  yield takeEvery(CREATE_CATEGORYS, createCategorysAsync);
+}
+function* updateCategorys() {
+  yield takeEvery(UPDATE_CATEGORYS, updateCategorysAsync);
+}
+function* deleteCategorys() {
+  yield takeEvery(DELETE_CATEGORYS, deleteCategorysAsync);
+}
 
 function* categorySaga() {
-  yield all([getCategorys()]);
+  yield all([
+    getCategorys(),
+    createCategorys(),
+    updateCategorys(),
+    deleteCategorys(),
+  ]);
 }
 
 export default categorySaga;

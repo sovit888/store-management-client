@@ -3,8 +3,10 @@ import { useFormik } from "formik";
 import categoryFormValidation from "./categoryFormValidation";
 import { Modal, ModalBody } from "reactstrap";
 import CategoryForm from "./CategoryForm";
+import { connect } from "react-redux";
+import { updateCategory } from "../../store/action";
 
-const ManageCategory = ({ status, toggle, category }) => {
+const ManageCategory = ({ status, toggle, category, manageCategory }) => {
   const formik = useFormik({
     initialValues: {
       name: category.name || "",
@@ -12,9 +14,11 @@ const ManageCategory = ({ status, toggle, category }) => {
     },
     enableReinitialize: true,
     validationSchema: categoryFormValidation,
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       values.status = values.status === "true" ? true : false;
-      console.log(values);
+      manageCategory({ ...values, _id: category._id });
+      resetForm();
+      toggle();
     },
   });
 
@@ -33,5 +37,9 @@ const ManageCategory = ({ status, toggle, category }) => {
     </>
   );
 };
-
-export default ManageCategory;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    manageCategory: (payload) => dispatch(updateCategory(payload)),
+  };
+};
+export default connect(null, mapDispatchToProps)(ManageCategory);

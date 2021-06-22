@@ -3,8 +3,10 @@ import { useFormik } from "formik";
 import brandFormValidation from "./brandFormValidation";
 import { Modal, ModalBody } from "reactstrap";
 import BrandForm from "./BrandForm";
+import { updateBrand } from "../../store/action";
+import { connect } from "react-redux";
 
-const ManageBrand = ({ status, toggle, brand }) => {
+const ManageBrand = ({ status, toggle, brand, manageBrand }) => {
   const formik = useFormik({
     initialValues: {
       name: brand.name || "",
@@ -12,9 +14,11 @@ const ManageBrand = ({ status, toggle, brand }) => {
     },
     enableReinitialize: true,
     validationSchema: brandFormValidation,
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       values.status = values.status === "true" ? true : false;
-      console.log(values);
+      manageBrand({ ...values, _id: brand._id });
+      resetForm();
+      toggle();
     },
   });
 
@@ -29,5 +33,10 @@ const ManageBrand = ({ status, toggle, brand }) => {
     </>
   );
 };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    manageBrand: (payload) => dispatch(updateBrand(payload)),
+  };
+};
 
-export default ManageBrand;
+export default connect(null, mapDispatchToProps)(ManageBrand);
