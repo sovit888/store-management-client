@@ -1,19 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MDBDataTable, MDBTooltip } from "mdbreact";
 import { FaWrench, FaTrashAlt } from "react-icons/fa";
-import RemoveCategory from "./RemoveCategory";
+import { connect } from "react-redux";
+import { getCategory } from "../../store/action";
 
-const categoryLists = [
-  { name: "Winter", status: false, id: 1 },
-  { name: "Summer", status: true, id: 2 },
-  { name: "Spring", status: true, id: 3 },
-  { name: "Bikni", status: false, id: 4 },
-];
-
-const CategoryTable = ({ setCategory, toggle, category }) => {
-  const [removeStatus, setRemoveStatus] = React.useState(false);
-  const handleToggle = () => setRemoveStatus(!removeStatus);
-
+const CategoryTable = ({
+  setCategory,
+  handleManage,
+  handleRemove,
+  categorys,
+  loadCategorys,
+}) => {
+  useEffect(() => {
+    loadCategorys();
+  }, [loadCategorys]);
   const data = {
     columns: [
       {
@@ -33,7 +33,7 @@ const CategoryTable = ({ setCategory, toggle, category }) => {
       },
     ],
     rows: [
-      ...categoryLists.map((value, index) => {
+      ...categorys.lists.map((value) => {
         return {
           name: value.name,
           status: value.status ? (
@@ -50,7 +50,7 @@ const CategoryTable = ({ setCategory, toggle, category }) => {
                   className="p-2 bg-primary text-white"
                   onClick={(e) => {
                     setCategory(value);
-                    toggle(e);
+                    handleManage();
                   }}
                 >
                   <FaWrench />
@@ -64,7 +64,7 @@ const CategoryTable = ({ setCategory, toggle, category }) => {
                   className="p-2 text-white bg-danger"
                   onClick={(e) => {
                     setCategory(value);
-                    handleToggle();
+                    handleRemove();
                   }}
                 >
                   <FaTrashAlt />
@@ -89,13 +89,14 @@ const CategoryTable = ({ setCategory, toggle, category }) => {
           sortable={false}
         />
       </div>
-      <RemoveCategory
-        status={removeStatus}
-        toggle={handleToggle}
-        category={category}
-      />
     </>
   );
 };
+const mapStateToProps = (state) => {
+  return { categorys: state.categorys };
+};
+const mapDispatchToProps = (dispatch) => {
+  return { loadCategorys: () => dispatch(getCategory()) };
+};
 
-export default CategoryTable;
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryTable);

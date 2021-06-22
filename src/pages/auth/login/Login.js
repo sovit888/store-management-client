@@ -1,12 +1,14 @@
-import React from "react";
-import { Form, Button } from "reactstrap";
+import React, { useState } from "react";
+import { Form, Button, UncontrolledAlert } from "reactstrap";
 import { EmailField, PasswordField } from "./loginComponent";
 import "./login.css";
 import { useFormik } from "formik";
 import loginValidation from "./loginValidation";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import axios from "axios";
 
-const Login = () => {
+const Login = ({ history }) => {
+  const [error, setError] = useState("");
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -14,12 +16,22 @@ const Login = () => {
     },
     validationSchema: loginValidation,
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
+      axios
+        .post("http://localhost:2000/api/auth/login", values)
+        .then((result) => {
+          localStorage.setItem("token", result.data.token);
+          history.push("/");
+        })
+        .catch((error) => {
+          setError("Invalid Credentials");
+        });
       resetForm();
     },
   });
   return (
     <div className="full-height">
+      {error && <UncontrolledAlert color="danger">{error}</UncontrolledAlert>}
+
       <div className="login-card py-4 px-3 bg-white">
         <Form onSubmit={formik.handleSubmit}>
           <EmailField formik={formik} />
@@ -38,4 +50,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withRouter(Login);

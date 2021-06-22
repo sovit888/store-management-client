@@ -4,6 +4,7 @@ import CreateCategory from "./CreateCategory";
 import ManageCategory from "./ManageCategory";
 import "./category.css";
 import CategoryTable from "./CategoryTable";
+import RemoveCategory from "./RemoveCategory";
 
 const Category = () => {
   const [category, setCategory] = React.useState({});
@@ -12,6 +13,9 @@ const Category = () => {
 
   const [manageCategory, setManageCategory] = React.useState(false);
   const handleManageStatus = (e) => setManageCategory(!manageCategory);
+
+  const [removeStatus, setRemoveStatus] = React.useState(false);
+  const handleRemoveStatus = () => setRemoveStatus(!removeStatus);
 
   return (
     <>
@@ -29,12 +33,17 @@ const Category = () => {
       <CreateCategory toggle={handleCreateStatus} status={createCategory} />
       <CategoryTable
         setCategory={setCategory}
-        toggle={handleManageStatus}
-        category={category}
+        handleManage={handleManageStatus}
+        handleRemove={handleRemoveStatus}
       />
       <ManageCategory
         toggle={handleManageStatus}
         status={manageCategory}
+        category={category}
+      />
+      <RemoveCategory
+        status={removeStatus}
+        toggle={handleRemoveStatus}
         category={category}
       />
     </>

@@ -2,6 +2,7 @@ import React from "react";
 import { Breadcrumb, BreadcrumbItem, Button } from "reactstrap";
 import CreateStore from "./CreateStore";
 import ManageStore from "./ManageStore";
+import RemoveStore from "./RemoveStore";
 import "./store.css";
 import StoreTable from "./StoreTable";
 
@@ -12,6 +13,9 @@ const Store = () => {
 
   const [manageShop, setManageShop] = React.useState(false);
   const handleManageStatus = (e) => setManageShop(!manageShop);
+
+  const [removeStatus, setRemoveStatus] = React.useState(false);
+  const handleRemoveStatus = () => setRemoveStatus(!removeStatus);
 
   return (
     <>
@@ -30,12 +34,17 @@ const Store = () => {
       <CreateStore toggle={handleCreateStatus} status={createShop} />
       <StoreTable
         setStore={setStore}
-        toggle={handleManageStatus}
-        store={store}
+        handleManage={handleManageStatus}
+        handleRemove={handleRemoveStatus}
       />
       <ManageStore
         toggle={handleManageStatus}
         status={manageShop}
+        store={store}
+      />
+      <RemoveStore
+        status={removeStatus}
+        toggle={handleRemoveStatus}
         store={store}
       />
     </>

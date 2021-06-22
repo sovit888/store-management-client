@@ -4,6 +4,7 @@ import CreateBrand from "./CreateBrand";
 import ManageBrand from "./ManageBrand";
 import "./brand.css";
 import BrandTable from "./BrandTable";
+import RemoveBrand from "./RemoveBrand";
 
 const Brand = () => {
   const [brand, setBrand] = React.useState({});
@@ -12,6 +13,9 @@ const Brand = () => {
 
   const [manageBrand, setManageBrand] = React.useState(false);
   const handleManageStatus = (e) => setManageBrand(!manageBrand);
+
+  const [removeStatus, setRemoveStatus] = React.useState(false);
+  const handleRemoveStatus = () => setRemoveStatus(!removeStatus);
 
   return (
     <>
@@ -29,12 +33,18 @@ const Brand = () => {
       <CreateBrand toggle={handleCreateStatus} status={createBrand} />
       <BrandTable
         setBrand={setBrand}
-        toggle={handleManageStatus}
+        handleManage={handleManageStatus}
+        handleRemove={handleRemoveStatus}
         brand={brand}
       />
       <ManageBrand
         toggle={handleManageStatus}
         status={manageBrand}
+        brand={brand}
+      />
+      <RemoveBrand
+        status={removeStatus}
+        toggle={handleRemoveStatus}
         brand={brand}
       />
     </>

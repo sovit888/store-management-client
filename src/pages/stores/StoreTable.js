@@ -1,19 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MDBDataTable, MDBTooltip } from "mdbreact";
 import { FaWrench, FaTrashAlt } from "react-icons/fa";
-import RemoveStore from "./RemoveStore";
+import { connect } from "react-redux";
+import { getStore } from "../../store/action";
 
-const storeLists = [
-  { name: "store 1", status: false, id: 1 },
-  { name: "store 2", status: true, id: 2 },
-  { name: "store 3", status: true, id: 3 },
-  { name: "store 4", status: false, id: 4 },
-];
-
-const StoreTable = ({ setStore, toggle, store }) => {
-  const [removeStatus, setRemoveStatus] = React.useState(false);
-  const handleToggle = () => setRemoveStatus(!removeStatus);
-
+const StoreTable = ({
+  setStore,
+  handleManage,
+  handleRemove,
+  stores,
+  loadCategory,
+}) => {
+  useEffect(() => {
+    loadCategory();
+  }, [loadCategory]);
   const data = {
     columns: [
       {
@@ -33,7 +33,7 @@ const StoreTable = ({ setStore, toggle, store }) => {
       },
     ],
     rows: [
-      ...storeLists.map((value, index) => {
+      ...stores.lists.map((value, index) => {
         return {
           name: value.name,
           status: value.status ? (
@@ -50,7 +50,7 @@ const StoreTable = ({ setStore, toggle, store }) => {
                   className="p-2 bg-primary text-white"
                   onClick={(e) => {
                     setStore(value);
-                    toggle(e);
+                    handleManage();
                   }}
                 >
                   <FaWrench />
@@ -64,7 +64,7 @@ const StoreTable = ({ setStore, toggle, store }) => {
                   className="p-2 text-white bg-danger"
                   onClick={(e) => {
                     setStore(value);
-                    handleToggle();
+                    handleRemove();
                   }}
                 >
                   <FaTrashAlt />
@@ -88,9 +88,15 @@ const StoreTable = ({ setStore, toggle, store }) => {
           entries={4}
         />
       </div>
-      <RemoveStore status={removeStatus} toggle={handleToggle} store={store} />
     </>
   );
 };
 
-export default StoreTable;
+const mapStateToProps = (state) => {
+  return { stores: state.stores };
+};
+const mapDispatchToProps = (dispatch) => {
+  return { loadCategory: () => dispatch(getStore()) };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(StoreTable);

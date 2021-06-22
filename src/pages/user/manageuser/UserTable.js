@@ -1,32 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MDBDataTable, MDBTooltip } from "mdbreact";
 import { FaTrashAlt, FaPen } from "react-icons/fa";
+import { getUser } from "../../../store/action";
+import { connect } from "react-redux";
 
-const userLists = [
-  {
-    username: "Sovitco",
-    email: "Sovitthapa008@gmail.com",
-    phone: "9826184961",
-    gender: "Male",
-    name: "Sovit Thapa",
-  },
-  {
-    username: "Sovitco",
-    email: "Sovitthapa008@gmail.com",
-    phone: "9826184961",
-    gender: "Male",
-    name: "Sovit Thapa",
-  },
-  {
-    username: "Sovitco",
-    email: "Sovitthapa008@gmail.com",
-    phone: "9826184961",
-    gender: "Male",
-    name: "Sovit Thapa",
-  },
-];
-
-const UserTable = ({ updateUser, removeUser, setUser }) => {
+const UserTable = ({ updateUser, removeUser, setUser, users, loadUsers }) => {
+  useEffect(() => {
+    loadUsers();
+  }, [loadUsers]);
   const data = {
     columns: [
       {
@@ -45,17 +26,23 @@ const UserTable = ({ updateUser, removeUser, setUser }) => {
         width: 200,
       },
       {
+        label: "Groups",
+        field: "group",
+        width: 200,
+      },
+      {
         label: "Operations",
         field: "operation",
         width: 200,
       },
     ],
     rows: [
-      ...userLists.map((value) => {
+      ...users.lists.map((value) => {
         return {
           email: value.email,
-          name: value.name,
+          name: value.first_name + value.last_name,
           username: value.username,
+          group: value.group.name,
           operation: (
             <>
               <MDBTooltip placement="left" domElement>
@@ -104,4 +91,10 @@ const UserTable = ({ updateUser, removeUser, setUser }) => {
   );
 };
 
-export default UserTable;
+const mapStateToProps = (state) => {
+  return { users: state.users };
+};
+const mapDispatchToProps = (dispatch) => {
+  return { loadUsers: () => dispatch(getUser()) };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(UserTable);

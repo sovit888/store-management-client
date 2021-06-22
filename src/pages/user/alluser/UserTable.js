@@ -1,30 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MDBDataTable } from "mdbreact";
-const userLists = [
-  {
-    username: "Sovitco",
-    email: "Sovitthapa008@gmail.com",
-    phone: "9826184961",
-    gender: "Male",
-    name: "Sovit Thapa",
-  },
-  {
-    username: "Sovitco",
-    email: "Sovitthapa008@gmail.com",
-    phone: "9826184961",
-    gender: "Male",
-    name: "Sovit Thapa",
-  },
-  {
-    username: "Sovitco",
-    email: "Sovitthapa008@gmail.com",
-    phone: "9826184961",
-    gender: "Male",
-    name: "Sovit Thapa",
-  },
-];
+import { getUser } from "../../../store/action";
+import { connect } from "react-redux";
 
-const UserTable = () => {
+const UserTable = ({ users, loadUsers }) => {
+  useEffect(() => {
+    loadUsers();
+  }, [loadUsers]);
   const data = {
     columns: [
       {
@@ -53,7 +35,18 @@ const UserTable = () => {
         width: 100,
       },
     ],
-    rows: userLists,
+
+    rows: [
+      ...users.lists.map((value) => {
+        return {
+          gender: value.gender,
+          phone: value.phone,
+          email: value.email,
+          username: value.username,
+          name: value.first_name + value.last_name,
+        };
+      }),
+    ],
   };
   return (
     <>
@@ -69,4 +62,10 @@ const UserTable = () => {
   );
 };
 
-export default UserTable;
+const mapStateToProps = (state) => {
+  return { users: state.users };
+};
+const mapDispatchToProps = (dispatch) => {
+  return { loadUsers: () => dispatch(getUser()) };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(UserTable);

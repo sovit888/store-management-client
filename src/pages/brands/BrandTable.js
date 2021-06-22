@@ -1,18 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MDBDataTable, MDBTooltip } from "mdbreact";
 import { FaWrench, FaTrashAlt } from "react-icons/fa";
-import RemoveBrand from "./RemoveBrand";
+import { connect } from "react-redux";
+import { getBrand } from "../../store/action";
 
-const brandLists = [
-  { name: "Adidas", status: true, id: 1 },
-  { name: "Nike", status: false, id: 2 },
-  { name: "Puma", status: false, id: 3 },
-  { name: "Vans", status: true, id: 4 },
-];
-
-const BrandTable = ({ setBrand, toggle, brand }) => {
-  const [removeStatus, setRemoveStatus] = React.useState(false);
-  const handleToggle = () => setRemoveStatus(!removeStatus);
+const BrandTable = ({
+  setBrand,
+  handleManage,
+  handleRemove,
+  brands,
+  loadBrands,
+}) => {
+  useEffect(() => {
+    loadBrands();
+  }, [loadBrands]);
 
   const data = {
     columns: [
@@ -33,7 +34,7 @@ const BrandTable = ({ setBrand, toggle, brand }) => {
       },
     ],
     rows: [
-      ...brandLists.map((value, index) => {
+      ...brands.lists.map((value) => {
         return {
           name: value.name,
           status: value.status ? (
@@ -50,7 +51,7 @@ const BrandTable = ({ setBrand, toggle, brand }) => {
                   className="p-2 bg-primary text-white"
                   onClick={(e) => {
                     setBrand(value);
-                    toggle(e);
+                    handleManage();
                   }}
                 >
                   <FaWrench />
@@ -64,7 +65,7 @@ const BrandTable = ({ setBrand, toggle, brand }) => {
                   className="p-2 text-white bg-danger"
                   onClick={(e) => {
                     setBrand(value);
-                    handleToggle();
+                    handleRemove();
                   }}
                 >
                   <FaTrashAlt />
@@ -87,9 +88,15 @@ const BrandTable = ({ setBrand, toggle, brand }) => {
           entriesOptions={[4, 7, 10]}
         />
       </div>
-      <RemoveBrand status={removeStatus} toggle={handleToggle} brand={brand} />
     </>
   );
 };
 
-export default BrandTable;
+const mapStateToProps = (state) => {
+  return { brands: state.brands };
+};
+const mapDispatchToProps = (dispatch) => {
+  return { loadBrands: () => dispatch(getBrand()) };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BrandTable);

@@ -1,19 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MDBDataTable, MDBTooltip } from "mdbreact";
 import { FaPen, FaTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
-
-const groupLists = [
-  {
-    _id: 1,
-    name: "Staff",
-    products: true,
-    categorys: false,
-    stores: true,
-    attributes: true,
-    brands: true,
-  },
-];
+import { connect } from "react-redux";
+import { getGroup } from "../../../store/action";
 
 const show = (status) => {
   return status ? (
@@ -23,7 +13,10 @@ const show = (status) => {
   );
 };
 
-const GroupTable = ({ toggle, setGroup }) => {
+const GroupTable = ({ toggle, setGroup, loadGroups, groups }) => {
+  useEffect(() => {
+    loadGroups();
+  }, [loadGroups]);
   const data = {
     columns: [
       {
@@ -63,7 +56,7 @@ const GroupTable = ({ toggle, setGroup }) => {
       },
     ],
     rows: [
-      ...groupLists.map((value) => {
+      ...groups.lists.map((value) => {
         return {
           name: value.name,
           products: show(value.products),
@@ -115,4 +108,10 @@ const GroupTable = ({ toggle, setGroup }) => {
   );
 };
 
-export default GroupTable;
+const mapStateToProps = (state) => {
+  return { groups: state.groups };
+};
+const mapDispatchToProps = (dispatch) => {
+  return { loadGroups: () => dispatch(getGroup()) };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(GroupTable);

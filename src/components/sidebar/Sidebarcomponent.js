@@ -3,7 +3,7 @@ import { BsCircle } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { FaChevronRight } from "react-icons/fa";
 
-const NavItem = ({ navlist }) => {
+const ShowMenus = ({ navlist }) => {
   return navlist.children ? (
     <DropDown navlist={navlist} />
   ) : (
@@ -15,6 +15,20 @@ const NavItem = ({ navlist }) => {
     </li>
   );
 };
+
+const NavItem = ({ navlist, profile }) => {
+  if (profile.info.group) {
+    if (navlist.permissions) {
+      if (profile.info.group[navlist.permission_type]) {
+        return <ShowMenus navlist={navlist} />;
+      }
+      return <></>;
+    }
+    return <ShowMenus navlist={navlist} />;
+  }
+  return <></>;
+};
+
 const DropDown = ({ navlist }) => {
   const dropdownRef = useRef();
   const toggleRef = useRef();
