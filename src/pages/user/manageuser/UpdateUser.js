@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Modal, ModalBody, FormGroup, Label, Input, Button } from "reactstrap";
+import { getGroup } from "../../../store/action";
+import { connect } from "react-redux";
 
-const UpdateUser = ({ status, toggle, user }) => {
+const UpdateUser = ({ status, toggle, user, groups, loadGroups }) => {
+  useEffect(() => {
+    loadGroups();
+  }, [loadGroups]);
   const [group, setGroup] = React.useState("User");
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(user);
     console.log(group);
     toggle();
   };
@@ -22,9 +28,13 @@ const UpdateUser = ({ status, toggle, user }) => {
               id="usergroup"
               onChange={(e) => setGroup(e.target.value)}
             >
-              <option>User</option>
-              <option>Staff</option>
-              <option>Lawyer</option>
+              {groups.lists.map((value, index) => {
+                return (
+                  <option key={index} value={value._id}>
+                    {value.name}
+                  </option>
+                );
+              })}
             </Input>
           </FormGroup>
           <div className="w-75 mx-auto d-flex justify-content-between">
@@ -49,5 +59,14 @@ const UpdateUser = ({ status, toggle, user }) => {
     </>
   );
 };
-
-export default UpdateUser;
+const mapStateToProps = (state) => {
+  return {
+    groups: state.groups,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadGroups: () => dispatch(getGroup()),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateUser);

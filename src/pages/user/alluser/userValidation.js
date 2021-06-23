@@ -30,5 +30,6 @@ const userValidation = yup.object().shape({
     .string()
     .required("password cannot be empty")
     .oneOf([yup.ref("password"), null], "Passwords must match"),
+  group: yup.string().required("Group cannt be empty"),
 });
 export default userValidation;

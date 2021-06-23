@@ -1,8 +1,10 @@
 import React from "react";
 import { Modal, ModalBody, Button } from "reactstrap";
-
-const RemoveGroup = ({ status, toggle, group }) => {
+import { connect } from "react-redux";
+import { deleteGroup } from "../../../store/action";
+const RemoveGroup = ({ status, toggle, group, removeGroup }) => {
   const handleDelete = (e) => {
+    removeGroup(group._id);
     toggle();
   };
   return (
@@ -28,4 +30,10 @@ const RemoveGroup = ({ status, toggle, group }) => {
   );
 };
 
-export default RemoveGroup;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeGroup: (payload) => dispatch(deleteGroup(payload)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(RemoveGroup);

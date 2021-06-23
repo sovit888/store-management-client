@@ -3,8 +3,10 @@ import { useFormik } from "formik";
 import { ModalBody, Modal } from "reactstrap";
 import attributeValidation from "./attributeValidation";
 import AttributeForm from "./AttributeForm";
+import { connect } from "react-redux";
+import { updateAttribute } from "../../../store/action";
 
-const ManageAttribute = ({ status, toggle, attribute }) => {
+const ManageAttribute = ({ status, toggle, attribute, manageAttribute }) => {
   const formik = useFormik({
     initialValues: {
       name: attribute.name || "",
@@ -14,8 +16,9 @@ const ManageAttribute = ({ status, toggle, attribute }) => {
     validationSchema: attributeValidation,
     onSubmit: (values, { resetForm }) => {
       values.status = values.status === "true" ? true : false;
-      console.log(values);
+      manageAttribute({ ...values, _id: attribute._id });
       resetForm();
+      toggle();
     },
   });
   return (
@@ -34,4 +37,9 @@ const ManageAttribute = ({ status, toggle, attribute }) => {
   );
 };
 
-export default ManageAttribute;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    manageAttribute: (payload) => dispatch(updateAttribute(payload)),
+  };
+};
+export default connect(null, mapDispatchToProps)(ManageAttribute);

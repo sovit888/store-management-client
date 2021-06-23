@@ -9,8 +9,10 @@ import {
   Button,
   FormFeedback,
 } from "reactstrap";
+import { updateGroup } from "../../../store/action";
+import { connect } from "react-redux";
 
-const GroupForm = ({ group }) => {
+const GroupForm = ({ group, history, id, manageGroup }) => {
   const formik = useFormik({
     initialValues: {
       name: group.name || "",
@@ -19,12 +21,14 @@ const GroupForm = ({ group }) => {
       categorys: group.categorys || false,
       products: group.products || false,
       stores: group.stores || false,
+      orders: group.orders || false,
     },
     enableReinitialize: true,
     validationSchema: groupValidation,
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
+      manageGroup({ ...values, _id: id });
       resetForm();
+      history.push("/group/manage");
     },
   });
   return (
@@ -51,6 +55,7 @@ const GroupForm = ({ group }) => {
         <CheckGroup name={"categorys"} label={"Categorys"} formik={formik} />
         <CheckGroup name={"products"} label={"Products"} formik={formik} />
         <CheckGroup name={"attributes"} label={"Attributes"} formik={formik} />
+        <CheckGroup name={"orders"} label={"Orders"} formik={formik} />
         <Button type="submit" className="custom-btn mt-2" color="primary">
           Update
         </Button>
@@ -74,5 +79,7 @@ const CheckGroup = ({ name, label, formik }) => {
     </FormGroup>
   );
 };
-
-export default GroupForm;
+const mapDispatchToProps = (dispatch) => {
+  return { manageGroup: (payload) => dispatch(updateGroup(payload)) };
+};
+export default connect(null, mapDispatchToProps)(GroupForm);

@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from "react";
 import GroupForm from "./GroupForm";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import authAxios from "../../../utils/authAxios";
 
 const UpdateGroup = () => {
   const [group, setGroup] = useState({});
   const { id } = useParams();
+  const history = useHistory();
+
   useEffect(() => {
-    console.log(id);
-    setGroup({
-      name: "HR Manager",
-      products: true,
-      stores: true,
-      brands: true,
-      attributes: true,
-      categorys: true,
-    });
-  }, [id]);
+    authAxios
+      .get(`/group/${id}`)
+      .then((result) => {
+        setGroup(result.data.group);
+      })
+      .catch((error) => {
+        history.goBack("/group/all");
+      });
+  }, [id, history]);
   return (
     <>
-      <GroupForm group={group} />
+      <GroupForm group={group} id={id} history={history} />
     </>
   );
 };

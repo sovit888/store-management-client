@@ -1,8 +1,11 @@
 import React from "react";
 import { Modal, ModalBody, Button } from "reactstrap";
+import { connect } from "react-redux";
+import { deleteAttribute } from "../../../store/action";
 
-const RemoveAttribute = ({ status, toggle }) => {
+const RemoveAttribute = ({ status, toggle, removeAttribute, attribute }) => {
   const handleConfirm = () => {
+    removeAttribute(attribute._id);
     toggle();
   };
   return (
@@ -27,5 +30,9 @@ const RemoveAttribute = ({ status, toggle }) => {
     </>
   );
 };
-
-export default RemoveAttribute;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeAttribute: (payload) => dispatch(deleteAttribute(payload)),
+  };
+};
+export default connect(null, mapDispatchToProps)(RemoveAttribute);

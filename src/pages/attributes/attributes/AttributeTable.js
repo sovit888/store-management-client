@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MDBDataTable, MDBTooltip } from "mdbreact";
 import { FaTrashAlt, FaPen, FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
-const attributeLists = [
-  { name: "Size", status: false, _id: 1 },
-  { name: "Colour", status: true, _id: 2 },
-  { name: "Shape", status: true, _id: 3 },
-];
+import { connect } from "react-redux";
+import { getAttribute } from "../../../store/action";
 
-const AttributeTable = ({ setAttribute, handleUpdate, handleRemove }) => {
+const AttributeTable = ({
+  setAttribute,
+  handleUpdate,
+  handleRemove,
+  attributes,
+  loadAttributes,
+}) => {
+  useEffect(() => {
+    loadAttributes();
+  }, [loadAttributes]);
   const data = {
     columns: [
       {
@@ -28,7 +34,7 @@ const AttributeTable = ({ setAttribute, handleUpdate, handleRemove }) => {
       },
     ],
     rows: [
-      ...attributeLists.map((value, index) => {
+      ...attributes.lists.map((value) => {
         return {
           name: value.name,
           status: value.status ? (
@@ -96,4 +102,11 @@ const AttributeTable = ({ setAttribute, handleUpdate, handleRemove }) => {
   );
 };
 
-export default AttributeTable;
+const mapStateToProps = (state) => {
+  return { attributes: state.attributes };
+};
+const mapDispatchToProps = (dispatch) => {
+  return { loadAttributes: () => dispatch(getAttribute()) };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AttributeTable);

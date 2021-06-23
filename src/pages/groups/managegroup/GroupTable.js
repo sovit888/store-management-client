@@ -50,6 +50,11 @@ const GroupTable = ({ toggle, setGroup, loadGroups, groups }) => {
         width: 100,
       },
       {
+        label: "Orders",
+        field: "orders",
+        width: 100,
+      },
+      {
         label: "Operations",
         field: "operations",
         width: 100,
@@ -64,6 +69,7 @@ const GroupTable = ({ toggle, setGroup, loadGroups, groups }) => {
           brands: show(value.brands),
           stores: show(value.stores),
           attributes: show(value.attributes),
+          orders: show(value.orders),
           operations: (
             <>
               <MDBTooltip placement="left" domElement>

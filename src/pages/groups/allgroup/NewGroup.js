@@ -9,8 +9,12 @@ import {
   Button,
   FormFeedback,
 } from "reactstrap";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { createGroup } from "../../../store/action";
 
-const NewGroup = () => {
+const NewGroup = ({ newGroup }) => {
+  const history = useHistory();
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -19,11 +23,13 @@ const NewGroup = () => {
       categorys: false,
       products: false,
       stores: false,
+      orders: false,
     },
     validationSchema: groupValidation,
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
+      newGroup(values);
       resetForm();
+      history.push("/group/all");
     },
   });
   return (
@@ -48,11 +54,12 @@ const NewGroup = () => {
               : ""}
           </FormFeedback>
         </FormGroup>
-        <CheckGroup name={"groups"} label={"Groups"} formik={formik} />
+        <CheckGroup name={"stores"} label={"Stores"} formik={formik} />
         <CheckGroup name={"brands"} label={"Brands"} formik={formik} />
         <CheckGroup name={"categorys"} label={"Categorys"} formik={formik} />
         <CheckGroup name={"products"} label={"Products"} formik={formik} />
         <CheckGroup name={"attributes"} label={"Attributes"} formik={formik} />
+        <CheckGroup name={"orders"} label={"Orders"} formik={formik} />
         <Button type="submit" className="custom-btn custom-btn-primary mt-2">
           Create
         </Button>
@@ -76,5 +83,10 @@ const CheckGroup = ({ name, label, formik }) => {
     </FormGroup>
   );
 };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    newGroup: (payload) => dispatch(createGroup(payload)),
+  };
+};
 
-export default NewGroup;
+export default connect(null, mapDispatchToProps)(NewGroup);

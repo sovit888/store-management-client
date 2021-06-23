@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import userValidation from "./userValidation";
 import {
@@ -9,8 +9,13 @@ import {
   Form,
   FormFeedback,
 } from "reactstrap";
+import { getGroup } from "../../../store/action";
+import { connect } from "react-redux";
 
-const NewUser = () => {
+const NewUser = ({ groups, loadGroups }) => {
+  useState(() => {
+    loadGroups();
+  }, [loadGroups]);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -21,6 +26,7 @@ const NewUser = () => {
       gender: "Male",
       password: "",
       confirm_password: "",
+      group: "",
     },
     validationSchema: userValidation,
     onSubmit: (values, { resetForm }) => {
@@ -81,6 +87,24 @@ const NewUser = () => {
             name={"phone"}
             formik={formik}
           />
+          <FormGroup>
+            <Label for="settinggroup">Group</Label>
+            <Input
+              type="select"
+              name="group"
+              id="settinggroup"
+              value={formik.values.group}
+              onChange={formik.handleChange}
+            >
+              {groups.lists.map((value, index) => {
+                return (
+                  <option key={index} value={value._id}>
+                    {value.name}
+                  </option>
+                );
+              })}
+            </Input>
+          </FormGroup>
           <FormField
             type="password"
             id="settingpassword"
@@ -124,4 +148,14 @@ const FormField = ({ type, id, name, label, formik }) => {
     </FormGroup>
   );
 };
-export default NewUser;
+const mapStateToProps = (state) => {
+  return {
+    groups: state.groups,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadGroups: () => dispatch(getGroup()),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(NewUser);

@@ -1,8 +1,8 @@
 import authAxios from "../../utils/authAxios";
 
-export const getGroupApi = () => {
+export const getAttributeApi = () => {
   return authAxios
-    .get("/group")
+    .get("/attribute")
     .then((response) => {
       return { data: response.data };
     })
@@ -11,9 +11,9 @@ export const getGroupApi = () => {
     });
 };
 
-export const createGroupApi = (group) => {
+export const createAttributeApi = (attribute) => {
   return authAxios
-    .post("/group", group)
+    .post("/attribute", attribute)
     .then((response) => {
       return { data: response.data };
     })
@@ -22,9 +22,9 @@ export const createGroupApi = (group) => {
     });
 };
 
-export const updateGroupApi = (group) => {
+export const updateAttributeApi = (attribute) => {
   return authAxios
-    .put("/group", group)
+    .put("/attribute", attribute)
     .then((response) => {
       return { data: response.data };
     })
@@ -33,9 +33,9 @@ export const updateGroupApi = (group) => {
     });
 };
 
-export const deleteGroupApi = (groupId) => {
+export const deleteAttributeApi = (attributeId) => {
   return authAxios
-    .delete(`/group/${groupId}`)
+    .delete(`/attribute/${attributeId}`)
     .then((response) => {
       return { data: response.data };
     })

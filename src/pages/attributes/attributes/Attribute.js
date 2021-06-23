@@ -40,7 +40,11 @@ const Attribute = () => {
         toggle={handleUpdate}
         attribute={attribute}
       />
-      <RemoveAttribute status={removeStatus} toggle={handleRemove} />
+      <RemoveAttribute
+        status={removeStatus}
+        toggle={handleRemove}
+        attribute={attribute}
+      />
     </>
   );
 };

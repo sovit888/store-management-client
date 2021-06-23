@@ -33,6 +33,11 @@ const GroupTable = ({ groups, loadGroups }) => {
         width: 200,
       },
       {
+        label: "Attributes",
+        field: "attributes",
+        width: 100,
+      },
+      {
         label: "Brands",
         field: "brands",
         width: 170,
@@ -43,8 +48,8 @@ const GroupTable = ({ groups, loadGroups }) => {
         width: 100,
       },
       {
-        label: "Attributes",
-        field: "attributes",
+        label: "Orders",
+        field: "orders",
         width: 100,
       },
     ],
@@ -57,6 +62,7 @@ const GroupTable = ({ groups, loadGroups }) => {
           brands: show(value.brands),
           stores: show(value.stores),
           attributes: show(value.attributes),
+          orders: show(value.orders),
         };
       }),
     ],

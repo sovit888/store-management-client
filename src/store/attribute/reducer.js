@@ -1,10 +1,10 @@
 import {
-  GET_GROUPS_LOADING,
-  GET_GROUPS_SUCCESS,
-  GET_GROUPS_ERROR,
-  CREATE_GROUPS_SUCCESS,
-  UPDATE_GROUPS_SUCCESS,
-  DELETE_GROUPS_SUCCESS,
+  GET_ATTRIBUTES_SUCCESS,
+  GET_ATTRIBUTES_ERROR,
+  GET_ATTRIBUTES_LOADING,
+  CREATE_ATTRIBUTES_SUCCESS,
+  UPDATE_ATTRIBUTES_SUCCESS,
+  DELETE_ATTRIBUTES_SUCCESS,
 } from "./actionType";
 const initailState = {
   loading: false,
@@ -12,24 +12,24 @@ const initailState = {
   lists: [],
 };
 
-const groupsReducer = (state = initailState, action) => {
+const attributesReducer = (state = initailState, action) => {
   switch (action.type) {
-    case GET_GROUPS_LOADING:
+    case GET_ATTRIBUTES_LOADING:
       return { lists: [], error: null, loading: true };
-    case GET_GROUPS_SUCCESS:
+    case GET_ATTRIBUTES_SUCCESS:
       return { loading: false, error: null, lists: action.payload };
-    case GET_GROUPS_ERROR:
+    case GET_ATTRIBUTES_ERROR:
       return { loading: false, error: action.payload, lists: [] };
-    case CREATE_GROUPS_SUCCESS:
+    case CREATE_ATTRIBUTES_SUCCESS:
       return { ...state, lists: [action.payload, ...state.lists] };
-    case UPDATE_GROUPS_SUCCESS:
+    case UPDATE_ATTRIBUTES_SUCCESS:
       let index = state.lists.findIndex(
         (value) => value._id === action.payload._id
       );
       let lists = [...state.lists];
       lists[index] = action.payload;
       return { ...state, lists: lists };
-    case DELETE_GROUPS_SUCCESS:
+    case DELETE_ATTRIBUTES_SUCCESS:
       return {
         ...state,
         lists: state.lists.filter((value) => value._id !== action.payload._id),
@@ -38,4 +38,4 @@ const groupsReducer = (state = initailState, action) => {
       return state;
   }
 };
-export default groupsReducer;
+export default attributesReducer;
