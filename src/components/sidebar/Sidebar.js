@@ -17,7 +17,15 @@ const Sidebar = ({ collapse, loadProfile, profile }) => {
       <ul className="sidebar-nav">
         <IconContext.Provider value={{ size: "20px" }}>
           {NavLists.map((navlist, index) => {
-            return <NavItem navlist={navlist} key={index} profile={profile} />;
+            return (
+              <NavItem
+                navlist={navlist}
+                key={index}
+                profile={profile}
+                permission={navlist.permissions}
+                permission_type={navlist.permission_type}
+              />
+            );
           })}
         </IconContext.Provider>
       </ul>

@@ -5,7 +5,7 @@ import UpdateUser from "./UpdateUser";
 import UserTable from "./UserTable";
 
 const ManageUser = () => {
-  const [user, setUser] = React.useState({});
+  const [user, setUser] = React.useState({ group: { _id: "" } });
   const [updateUserStatus, setUpdateUserStatus] = useState(false);
   const handleUpdate = () => setUpdateUserStatus(!updateUserStatus);
 

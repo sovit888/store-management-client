@@ -34,6 +34,11 @@ const UserTable = ({ users, loadUsers }) => {
         field: "gender",
         width: 100,
       },
+      {
+        label: "Groups",
+        field: "group",
+        width: 200,
+      },
     ],
 
     rows: [
@@ -44,6 +49,7 @@ const UserTable = ({ users, loadUsers }) => {
           email: value.email,
           username: value.username,
           name: value.first_name + value.last_name,
+          group: value.group.name,
         };
       }),
     ],

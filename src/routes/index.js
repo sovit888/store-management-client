@@ -21,6 +21,7 @@ import AllUser from "../pages/user/alluser/AllUser";
 import NewUser from "../pages/user/alluser/NewUser";
 import ManageUser from "../pages/user/manageuser/ManageUser";
 import Setting from "../pages/Setting/Setting";
+import UpdatePassword from "../pages/Setting/UpdatePassword";
 import Login from "../pages/auth/login/Login";
 import Logout from "../pages/auth/logout/Logout";
 
@@ -56,6 +57,7 @@ export const privateRoutes = [
   { path: "/user/manage", component: ManageUser, permissions: "attributes" },
   { path: "/user/new", component: NewUser, permissions: "attributes" },
   { path: "/setting", component: Setting },
+  { path: "/setting/password", component: UpdatePassword },
   { path: "/logout", component: Logout },
 ];
 

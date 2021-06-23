@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   FormGroup,
   Label,
@@ -9,35 +9,31 @@ import {
 } from "reactstrap";
 import settingFormValidation from "./settingFormValidation";
 import { useFormik } from "formik";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { updateProfile, getProfile } from "../../store/action";
 
-const SettingForm = () => {
+const SettingForm = ({ profile, manageProfile, loadProfile }) => {
+  useEffect(() => {
+    loadProfile();
+  }, [loadProfile]);
   const formik = useFormik({
     initialValues: {
-      email: "",
-      username: "",
-      first_name: "",
-      last_name: "",
-      phone: "",
-      gender: "Male",
-      password: "",
-      confirm_password: "",
+      username: profile.info.username || "",
+      first_name: profile.info.first_name || "",
+      last_name: profile.info.last_name || "",
+      phone: profile.info.phone || "",
+      gender: profile.info.gender || "Male",
     },
     validationSchema: settingFormValidation,
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
+      manageProfile(values);
       resetForm();
     },
   });
   return (
     <>
       <Form onSubmit={formik.handleSubmit}>
-        <FormField
-          type="email"
-          id="settingemail"
-          label={"Email"}
-          name={"email"}
-          formik={formik}
-        />
         <FormField
           type="text"
           id="settingusername"
@@ -79,32 +75,26 @@ const SettingForm = () => {
           name={"phone"}
           formik={formik}
         />
-        <FormField
-          type="password"
-          id="settingpassword"
-          label={"New Password"}
-          name={"password"}
-          formik={formik}
-        />
-        <FormField
-          type="password"
-          id="settingconfirmpassword"
-          label={"Confirm Password"}
-          name={"confirm_password"}
-          formik={formik}
-        />
         <Button className="custom-btn custom-btn-primary mt-3" type="submit">
-          Update
+          Update Info
         </Button>
+        <Link
+          to="/setting/password"
+          className="custom-btn custom-btn-primary btn text-white mt-3"
+        >
+          Update Password
+        </Link>
       </Form>
     </>
   );
 };
 
-const FormField = ({ type, id, name, label, formik }) => {
+export const FormField = ({ type, id, name, label, formik }) => {
   return (
     <FormGroup className="mb-0">
-      <Label for={id}>{label}:</Label>
+      <Label for={id} className="custm-label">
+        {label}:
+      </Label>
       <Input
         type={type}
         name={name}
@@ -121,5 +111,13 @@ const FormField = ({ type, id, name, label, formik }) => {
     </FormGroup>
   );
 };
-
-export default SettingForm;
+const mapStateToProps = (state) => {
+  return { profile: state.profile };
+};
+const mapDispatchTProps = (dispatch) => {
+  return {
+    manageProfile: (payload) => dispatch(updateProfile(payload)),
+    loadProfile: () => dispatch(getProfile()),
+  };
+};
+export default connect(mapStateToProps, mapDispatchTProps)(SettingForm);

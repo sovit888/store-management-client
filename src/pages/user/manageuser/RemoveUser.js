@@ -1,9 +1,11 @@
 import React from "react";
 import { Modal, ModalBody, Button } from "reactstrap";
+import { deleteUser } from "../../../store/action";
+import { connect } from "react-redux";
 
-const RemoveUser = ({ status, toggle, user }) => {
+const RemoveUser = ({ status, toggle, user, removeUser }) => {
   const handleDelete = (e) => {
-    console.log(user);
+    removeUser(user._id);
     toggle();
   };
   return (
@@ -28,5 +30,9 @@ const RemoveUser = ({ status, toggle, user }) => {
     </>
   );
 };
-
-export default RemoveUser;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeUser: (payload) => dispatch(deleteUser(payload)),
+  };
+};
+export default connect(null, mapDispatchToProps)(RemoveUser);

@@ -9,10 +9,12 @@ import {
   Form,
   FormFeedback,
 } from "reactstrap";
-import { getGroup } from "../../../store/action";
+import { useHistory } from "react-router-dom";
+import { getGroup, createUser } from "../../../store/action";
 import { connect } from "react-redux";
 
-const NewUser = ({ groups, loadGroups }) => {
+const NewUser = ({ groups, loadGroups, newUser }) => {
+  const history = useHistory();
   useState(() => {
     loadGroups();
   }, [loadGroups]);
@@ -30,8 +32,9 @@ const NewUser = ({ groups, loadGroups }) => {
     },
     validationSchema: userValidation,
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
+      newUser(values);
       resetForm();
+      history.push("/user/all");
     },
   });
   return (
@@ -156,6 +159,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     loadGroups: () => dispatch(getGroup()),
+    newUser: (payload) => dispatch(createUser(payload)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(NewUser);

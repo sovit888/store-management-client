@@ -9,6 +9,7 @@ const Layout = ({ children }) => {
   const handleToggle = () => {
     setCollapse(!collapse);
   };
+
   return (
     <>
       <Sidebar collapse={collapse} />

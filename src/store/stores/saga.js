@@ -22,7 +22,6 @@ function* getStoresAsync() {
   yield put({ type: GET_STORES_LOADING });
   try {
     const { data, error } = yield call(getStoreApi);
-    console.log(data);
     if (data) {
       yield put({ type: GET_STORES_SUCCESS, payload: data.stores });
     } else {

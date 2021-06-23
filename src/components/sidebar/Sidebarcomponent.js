@@ -16,17 +16,18 @@ const ShowMenus = ({ navlist }) => {
   );
 };
 
-const NavItem = ({ navlist, profile }) => {
-  if (profile.info.group) {
-    if (navlist.permissions) {
-      if (profile.info.group[navlist.permission_type]) {
-        return <ShowMenus navlist={navlist} />;
-      }
-      return <></>;
-    }
-    return <ShowMenus navlist={navlist} />;
-  }
-  return <></>;
+const NavItem = ({ navlist, profile, permission, permission_type }) => {
+  return (
+    <>
+      {permission && permission_type ? (
+        profile.info &&
+        profile.info.group &&
+        profile.info.group[permission_type] && <ShowMenus navlist={navlist} />
+      ) : (
+        <ShowMenus navlist={navlist} />
+      )}
+    </>
+  );
 };
 
 const DropDown = ({ navlist }) => {

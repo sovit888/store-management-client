@@ -1,17 +1,23 @@
 import React, { useEffect } from "react";
 import { Modal, ModalBody, FormGroup, Label, Input, Button } from "reactstrap";
-import { getGroup } from "../../../store/action";
+import { getGroup, updateUser } from "../../../store/action";
 import { connect } from "react-redux";
 
-const UpdateUser = ({ status, toggle, user, groups, loadGroups }) => {
+const UpdateUser = ({
+  status,
+  toggle,
+  user,
+  groups,
+  loadGroups,
+  manageUser,
+}) => {
   useEffect(() => {
     loadGroups();
   }, [loadGroups]);
-  const [group, setGroup] = React.useState("User");
+  const [group, setGroup] = React.useState(user.group._id);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(user);
-    console.log(group);
+    manageUser({ _id: user._id, group });
     toggle();
   };
   return (
@@ -26,6 +32,7 @@ const UpdateUser = ({ status, toggle, user, groups, loadGroups }) => {
               type="select"
               name="group"
               id="usergroup"
+              value={group}
               onChange={(e) => setGroup(e.target.value)}
             >
               {groups.lists.map((value, index) => {
@@ -67,6 +74,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     loadGroups: () => dispatch(getGroup()),
+    manageUser: (payload) => dispatch(updateUser(payload)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateUser);
