@@ -2,13 +2,12 @@ import React from "react";
 import { MDBDataTable, MDBTooltip } from "mdbreact";
 import { FaWrench, FaTrashAlt } from "react-icons/fa";
 
-const valueLists = [
-  { name: "Red", status: true, id: 1 },
-  { name: "Orange", status: false, id: 2 },
-  { name: "Pink", status: false, id: 3 },
-];
-
-const ValueTable = ({ handleRemove, setValue, handleUpdate }) => {
+const ValueTable = ({
+  handleRemove,
+  setValue,
+  handleUpdate,
+  attributeValues,
+}) => {
   const data = {
     columns: [
       {
@@ -28,7 +27,7 @@ const ValueTable = ({ handleRemove, setValue, handleUpdate }) => {
       },
     ],
     rows: [
-      ...valueLists.map((value, index) => {
+      ...attributeValues.map((value) => {
         return {
           name: value.name,
           status: value.status ? (

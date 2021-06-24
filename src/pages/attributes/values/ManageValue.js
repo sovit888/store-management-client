@@ -3,8 +3,16 @@ import { useFormik } from "formik";
 import { ModalBody, Modal } from "reactstrap";
 import valueValidation from "./valueValidation";
 import ValueForm from "./ValueForm";
+import authAxios from "../../../utils/authAxios";
 
-const ManageValue = ({ status, toggle, value }) => {
+const ManageValue = ({
+  status,
+  toggle,
+  value,
+  setAttributeValues,
+  attributes,
+  id,
+}) => {
   const formik = useFormik({
     initialValues: {
       name: value.name || "",
@@ -14,7 +22,16 @@ const ManageValue = ({ status, toggle, value }) => {
     validationSchema: valueValidation,
     onSubmit: (values, { resetForm }) => {
       values.status = values.status === "true" ? true : false;
-      console.log(values);
+      authAxios
+        .put(`/${id}/values`, { ...values, _id: value._id })
+        .then((result) => {
+          let newList = [...attributes];
+          let index = newList.findIndex(
+            (list) => list._id === result.data.values._id
+          );
+          newList[index] = result.data.values;
+          setAttributeValues(newList);
+        });
       resetForm();
       toggle();
     },

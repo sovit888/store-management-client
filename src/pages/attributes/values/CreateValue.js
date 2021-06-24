@@ -3,8 +3,15 @@ import { useFormik } from "formik";
 import { ModalBody, Modal } from "reactstrap";
 import valueValidation from "./valueValidation";
 import ValueForm from "./ValueForm";
+import authAxios from "../../../utils/authAxios";
 
-const CreateValue = ({ status, toggle }) => {
+const CreateValue = ({
+  status,
+  toggle,
+  attributeValues,
+  setAttributeValues,
+  id,
+}) => {
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -13,8 +20,13 @@ const CreateValue = ({ status, toggle }) => {
     validationSchema: valueValidation,
     onSubmit: (values, { resetForm }) => {
       values.status = values.status === "true" ? true : false;
-      console.log(values);
+      authAxios
+        .post(`/${id}/values`, { ...values, attribute: id })
+        .then((result) => {
+          setAttributeValues([result.data.value, ...attributeValues]);
+        });
       resetForm();
+      toggle();
     },
   });
   return (

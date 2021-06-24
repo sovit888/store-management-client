@@ -1,8 +1,22 @@
 import React from "react";
 import { Modal, ModalBody, Button } from "reactstrap";
+import authAxios from "../../../utils/authAxios";
 
-const RemoveValue = ({ status, toggle, value }) => {
+const RemoveValue = ({
+  status,
+  toggle,
+  value,
+  id,
+  setAttributeValues,
+  attributes,
+}) => {
   const handleConfirm = () => {
+    authAxios.delete(`/${id}/values/${value._id}`).then((result) => {
+      let newList = [...attributes];
+      setAttributeValues(
+        newList.filter((list) => list._id !== result.data.values._id)
+      );
+    });
     toggle();
   };
   return (
