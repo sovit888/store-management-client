@@ -1,5 +1,5 @@
-import React from "react";
-import { Col, Row, Button } from "reactstrap";
+import React, { useEffect, useState } from "react";
+import { Col, Row, Button, Form } from "reactstrap";
 import {
   FormField,
   FormNormalField,
@@ -7,8 +7,39 @@ import {
   FormDisableField,
   FormRowDisabledField,
 } from "./FormComponent";
+import { useFormik } from "formik";
+import { GET_DETAILS } from "./query";
+import { useQuery } from "@apollo/client";
+import formValidation from "./formValidation";
 
 const OrderForm = () => {
+  const [products, setProducts] = useState([]);
+  const [quantity, setQuantity] = useState(null);
+  const [price, setPrice] = useState(null);
+  const { data } = useQuery(GET_DETAILS);
+  useEffect(() => {
+    if (data) {
+      setProducts(data.products);
+    }
+  }, [data]);
+  const formik = useFormik({
+    initialValues: {
+      customer_name: "",
+      customer_phone: "",
+      customer_address: "",
+      product: "",
+      quantity: null,
+    },
+    validationSchema: formValidation,
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
+  useEffect(() => {
+    if (formik.values.quantity != null) {
+      setQuantity(Number(formik.values.quantity));
+    }
+  }, [formik.values.quantity]);
   return (
     <>
       <div className="d-flex justify-content-end">
@@ -16,77 +47,111 @@ const OrderForm = () => {
           Date: {new Date().toISOString().split("T")[0]}
         </p>
       </div>
-      <FormField
-        id={"customer-name"}
-        name="customer_name"
-        label="Customer Name"
-      />
-      <FormField
-        id={"customer-address"}
-        name="customer_address"
-        label="Customer Address"
-      />
-      <FormField
-        id={"customer-phone"}
-        name="customer_phone"
-        label="Customer Phone"
-      />
-      <Row>
-        <Col xs={5}>
-          <SelectField
-            id="product"
-            name="product"
-            label="Product"
-            options={["Jacket", "Shoes"]}
-          />
-        </Col>
-        <Col xs={2}>
-          <FormNormalField name="quantity" id="quantity" label="Qty:" />
-        </Col>
-        <Col xs={2}>
-          <FormDisableField name="rate" id="rate" label="Rate" value={20} />
-        </Col>
-        <Col>
-          <FormDisableField
-            name="amount"
-            id="amount"
-            label="Amount"
-            value={20}
-          />
-        </Col>
-      </Row>
-      <div className="d-flex flex-column align-items-end justify-content-end">
-        <Col xs={6}>
-          <FormRowDisabledField
-            name="gross_amount"
-            id="gross-amount"
-            label="Gross Amount"
-            value={20}
-          />
-        </Col>
-        <Col xs={6}>
-          <FormRowDisabledField
-            name="discount"
-            id="discount"
-            label="Discount"
-            value={20}
-          />
-        </Col>
-        <Col xs={6}>
-          <FormRowDisabledField name="vat" id="vat" label="VAT" value={20} />
-        </Col>
-        <Col xs={6}>
-          <FormRowDisabledField
-            name="total-amount"
-            id="total-amount"
-            label="Total Amount"
-            value={20}
-          />
-        </Col>
-      </div>
-      <Button color="primary" className="custom-btn">
-        Create Order
-      </Button>
+      <Form onSubmit={formik.handleSubmit}>
+        <FormField
+          id={"customer-name"}
+          name="customer_name"
+          label="Customer Name"
+          formik={formik}
+        />
+        <FormField
+          id={"customer-address"}
+          name="customer_address"
+          label="Customer Address"
+          formik={formik}
+        />
+        <FormField
+          id={"customer-phone"}
+          name="customer_phone"
+          label="Customer Phone"
+          formik={formik}
+        />
+        <Row>
+          <Col xs={5}>
+            <SelectField
+              id="product"
+              name="product"
+              label="Product"
+              options={products}
+              formik={formik}
+              setPrice={setPrice}
+            />
+          </Col>
+          <Col xs={2}>
+            <FormNormalField
+              name="quantity"
+              id="quantity"
+              label="Qty:"
+              formik={formik}
+            />
+          </Col>
+          <Col xs={2}>
+            <FormDisableField
+              name="rate"
+              id="rate"
+              label="Rate"
+              value={price != null ? price : null}
+            />
+          </Col>
+          <Col>
+            <FormDisableField
+              name="amount"
+              id="amount"
+              label="Amount"
+              value={
+                price != null && quantity != null ? price * quantity : null
+              }
+            />
+          </Col>
+        </Row>
+        <div className="d-flex flex-column align-items-end justify-content-end">
+          <Col xs={6}>
+            <FormRowDisabledField
+              name="discount"
+              id="discount"
+              label="Discount"
+              value={
+                price != null && quantity != null
+                  ? 0.1 * price * quantity
+                  : null
+              }
+            />
+          </Col>
+          <Col xs={6}>
+            <FormRowDisabledField
+              name="vat"
+              id="vat"
+              label="VAT"
+              value={
+                price != null && quantity != null
+                  ? (
+                      (price * quantity - 0.1 * price * quantity) *
+                      0.13
+                    ).toFixed(2)
+                  : null
+              }
+            />
+          </Col>
+          <Col xs={6}>
+            <FormRowDisabledField
+              name="total-amount"
+              id="total-amount"
+              label="Total Amount"
+              value={
+                price != null && quantity != null
+                  ? (
+                      (price * quantity - 0.1 * price * quantity) *
+                      1.13
+                    ).toFixed(2)
+                  : null
+              }
+            />
+          </Col>
+        </div>
+        <Button color="primary" className="custom-btn" type="submit">
+          Create Order
+        </Button>
+      </Form>
     </>
   );
 };
