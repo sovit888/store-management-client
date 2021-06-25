@@ -50,7 +50,6 @@ function* updateCategorysAsync({ payload }) {
 }
 
 function* deleteCategorysAsync({ payload }) {
-  console.log(payload);
   try {
     const { data } = yield call(deleteCategoryApi, payload);
     console.log(data);

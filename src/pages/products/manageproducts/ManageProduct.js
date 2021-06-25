@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
+import ProductTable from "./ProductTable";
+import { Breadcrumb, BreadcrumbItem } from "reactstrap";
+import RemoveProduct from "./RemoveProduct";
 
 const ManageProduct = () => {
+  const [product, setProduct] = useState({});
+  const [removeStatus, setRemoveStatus] = useState(false);
+  const handleRemove = () => setRemoveStatus(!removeStatus);
   return (
     <>
-      <h1>This is a manage product page</h1>
+      <Breadcrumb>
+        <BreadcrumbItem>Manage Products</BreadcrumbItem>
+      </Breadcrumb>
+      <ProductTable setProduct={setProduct} toggle={handleRemove} />
+      <RemoveProduct
+        status={removeStatus}
+        toggle={handleRemove}
+        product={product}
+      />
     </>
   );
 };

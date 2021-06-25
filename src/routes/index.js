@@ -14,6 +14,7 @@ import PrintOrder from "../pages/orders/manageorder/PrintOrder";
 import AllProduct from "../pages/products/allproducts/AllProduct";
 import NewProduct from "../pages/products/allproducts/NewProduct";
 import ManageProduct from "../pages/products/manageproducts/ManageProduct";
+import EditProduct from "../pages/products/manageproducts/EditProduct";
 import Profile from "../pages/profiles/Profile";
 import Report from "../pages/reports/Report";
 import Store from "../pages/stores/Store";
@@ -50,6 +51,7 @@ export const privateRoutes = [
     component: ManageProduct,
     permissions: "attributes",
   },
+  { path: "/product/:id", component: EditProduct },
   { path: "/profile", component: Profile },
   { path: "/report", component: Report },
   { path: "/store", component: Store, permissions: "attributes" },

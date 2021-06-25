@@ -1,4 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useParams, useHistory } from "react-router-dom";
+import authAxios from "../../../utils/authAxios";
+import { useFormik } from "formik";
+import productValidation from "../allproducts/productValidation";
+import { connect } from "react-redux";
+import { updateProduct } from "../../../store/action";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,24 +20,21 @@ import {
   DescriptionField,
   SelectField,
   MultiSelect,
-} from "./FormComponent";
-import { GET_DETAILS } from "./query";
+} from "../allproducts/FormComponent";
+import { GET_DETAILS } from "../allproducts/query";
 import { useQuery } from "@apollo/client";
-import { useFormik } from "formik";
-import productValidation from "./productValidation";
-import { createProduct } from "../../../store/action";
-import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
 
-const NewProduct = ({ newProduct }) => {
-  const history = useHistory();
+const EditProduct = ({ editProduct }) => {
+  const { id } = useParams();
   const { data } = useQuery(GET_DETAILS);
   const [stores, setStores] = useState([]);
   const [brands, setBrands] = useState([]);
   const [categorys, setCategorys] = useState([]);
   const [image, setImage] = useState(null);
+  const [product, setProduct] = useState({});
   const [attribute, setAttribute] = useState({});
   const [productAttribute, setProductAttribute] = useState({});
+  const history = useHistory();
   useEffect(() => {
     if (data) {
       setBrands(data.brands);
@@ -54,26 +57,41 @@ const NewProduct = ({ newProduct }) => {
       );
     }
   }, [data]);
+  useEffect(() => {
+    authAxios
+      .get(`/product/${id}`)
+      .then((result) => {
+        setProduct(result.data.product);
+      })
+      .catch((error) => {
+        history.push("/product/manage");
+      });
+  }, [history, id]);
+
   const formik = useFormik({
     initialValues: {
-      name: "",
-      price: "",
-      description: "",
-      store: "",
-      brand: "",
-      category: "",
-      availability: false,
+      name: product.name || "",
+      price: product.price || "",
+      description: product.description || "",
+      store: product.store || "",
+      brand: product.brand || "",
+      category: product.category || "",
+      availability: product.availability || false,
     },
+    enableReinitialize: true,
     validationSchema: productValidation,
     onSubmit: (values) => {
       const formData = new FormData();
       for (let x in values) {
         formData.append(x, values[x]);
       }
-      formData.append("image", image);
+      if (image != null) {
+        formData.append("image", image);
+      }
+
       formData.append("attribute", JSON.stringify(productAttribute));
-      newProduct(formData);
-      history.push("/product/all");
+      editProduct({ data: formData, id: id });
+      history.push("/product/manage");
     },
   });
 
@@ -110,6 +128,7 @@ const NewProduct = ({ newProduct }) => {
                 options={value}
                 key={index}
                 label={key}
+                defaultValue={JSON.parse(product.attribute || '""')[key] || []}
                 handleProductAttribute={handleProductAttribute}
               />
             );
@@ -148,7 +167,7 @@ const NewProduct = ({ newProduct }) => {
             </Label>
           </FormGroup>
           <Button className="custom-btn" color="primary" type="submit">
-            Create
+            Update
           </Button>
         </Form>
       </div>
@@ -157,7 +176,7 @@ const NewProduct = ({ newProduct }) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    newProduct: (payload) => dispatch(createProduct(payload)),
+    editProduct: (payload) => dispatch(updateProduct(payload)),
   };
 };
-export default connect(null, mapDispatchToProps)(NewProduct);
+export default connect(null, mapDispatchToProps)(EditProduct);

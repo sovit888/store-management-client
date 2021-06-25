@@ -6,6 +6,7 @@ import brandsReducer from "./brand/reducer";
 import categorysReducer from "./category/reducer";
 import storesReducer from "./stores/reducer";
 import attributesReducer from "./attribute/reducer";
+import productsReducer from "./product/reducer";
 
 const rootReducer = combineReducers({
   profile: profileReducer,
@@ -15,5 +16,6 @@ const rootReducer = combineReducers({
   categorys: categorysReducer,
   stores: storesReducer,
   attributes: attributesReducer,
+  products: productsReducer,
 });
 export default rootReducer;

@@ -1,17 +1,11 @@
 import React, { useEffect } from "react";
-import { MDBDataTable } from "mdbreact";
+import { MDBDataTable, MDBTooltip } from "mdbreact";
 import { getProduct } from "../../../store/action";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { FaPen, FaTrashAlt } from "react-icons/fa";
 
-const show = (status) => {
-  return status ? (
-    <span className="bg-success p-1 text-white rounded-border">Yes</span>
-  ) : (
-    <span className="bg-warning p-1 rounded-border">No</span>
-  );
-};
-
-const ProductTable = ({ products, loadProducts }) => {
+const ProductTable = ({ products, loadProducts, setProduct, toggle }) => {
   useEffect(() => {
     loadProducts();
   }, [loadProducts]);
@@ -44,8 +38,8 @@ const ProductTable = ({ products, loadProducts }) => {
       },
       { label: "Price", field: "price", width: 200 },
       {
-        label: "Availability",
-        field: "availability",
+        label: "Operations",
+        field: "operations",
         width: 170,
       },
     ],
@@ -69,7 +63,32 @@ const ProductTable = ({ products, loadProducts }) => {
           category: value.category,
           store: value.store,
           price: <span className="font-weight-bold"> Rs {value.price} </span>,
-          availability: show(value.availability),
+          operations: (
+            <>
+              <MDBTooltip placement="left" domElement>
+                <Link to={`/product/${value._id}`}>
+                  <span className="p-2 bg-primary text-white">
+                    <FaPen />
+                  </span>
+                </Link>
+                <div>Edit Product</div>
+              </MDBTooltip>
+
+              <span className="mx-1"></span>
+              <MDBTooltip placement="right" domElement>
+                <span
+                  className="p-2 text-white bg-danger"
+                  onClick={(e) => {
+                    setProduct(value);
+                    toggle();
+                  }}
+                >
+                  <FaTrashAlt />
+                </span>
+                <div>Delete Product</div>
+              </MDBTooltip>
+            </>
+          ),
         };
       }),
     ],
