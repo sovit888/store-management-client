@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { FormField } from "./SettingForm";
 import { Form, Button } from "reactstrap";
 import passwordValidation from "./passwordValidation";
-import authAxios from "../../utils/authAxios";
+import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 const UpdatePassword = () => {
@@ -15,9 +15,15 @@ const UpdatePassword = () => {
     },
     validationSchema: passwordValidation,
     onSubmit: (values) => {
-      authAxios.post("/password/update", values).then((result) => {
-        history.push("/profile");
-      });
+      axios
+        .post("http://localhost:2000/api/password/update", values, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((result) => {
+          history.push("/profile");
+        });
     },
   });
   return (

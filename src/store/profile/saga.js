@@ -7,6 +7,8 @@ import {
   GET_PROFILE_ERROR,
   UPDATE_PROFILE,
   UPDATE_PROFILE_SUCCESS,
+  REMOVE_PROFILE_SUCCESS,
+  REMOVE_PROFILE,
 } from "./actionType";
 
 function* getProfileAsync() {
@@ -32,12 +34,19 @@ function* updateProfileAsync({ payload }) {
   } catch (error) {}
 }
 
+function* removeProfileAsync() {
+  yield put({ type: REMOVE_PROFILE_SUCCESS });
+}
+
 function* getProfile() {
   yield takeEvery(GET_PROFILE, getProfileAsync);
 }
 function* updateProfile() {
   yield takeEvery(UPDATE_PROFILE, updateProfileAsync);
 }
+function* removeProfile() {
+  yield takeEvery(REMOVE_PROFILE, removeProfileAsync);
+}
 export default function* profileSaga() {
-  yield all([getProfile(), updateProfile()]);
+  yield all([getProfile(), updateProfile(), removeProfile()]);
 }

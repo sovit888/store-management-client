@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import authAxios from "../../../utils/authAxios";
 import { useFormik } from "formik";
 import productValidation from "../allproducts/productValidation";
 import { connect } from "react-redux";
@@ -23,10 +22,11 @@ import {
 } from "../allproducts/FormComponent";
 import { GET_DETAILS } from "../allproducts/query";
 import { useQuery } from "@apollo/client";
+import axios from "axios";
 
 const EditProduct = ({ editProduct }) => {
   const { id } = useParams();
-  const { data } = useQuery(GET_DETAILS);
+  const { data, refetch } = useQuery(GET_DETAILS);
   const [stores, setStores] = useState([]);
   const [brands, setBrands] = useState([]);
   const [categorys, setCategorys] = useState([]);
@@ -58,8 +58,12 @@ const EditProduct = ({ editProduct }) => {
     }
   }, [data]);
   useEffect(() => {
-    authAxios
-      .get(`/product/${id}`)
+    axios
+      .get(`http://localhost:2000/api/product/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       .then((result) => {
         setProduct(result.data.product);
       })
@@ -67,6 +71,9 @@ const EditProduct = ({ editProduct }) => {
         history.push("/product/manage");
       });
   }, [history, id]);
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   const formik = useFormik({
     initialValues: {

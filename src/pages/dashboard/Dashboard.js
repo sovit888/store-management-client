@@ -15,12 +15,15 @@ const Dashboard = () => {
     income: 1000,
     sales: 200,
   });
-  const { data } = useQuery(GET_CONTENT);
+  const { data, refetch } = useQuery(GET_CONTENT);
   useEffect(() => {
     if (data) {
       setDetail(data);
     }
   }, [data]);
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
   return (
     <>
       <div className="bg-white p-3">

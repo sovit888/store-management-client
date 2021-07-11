@@ -1,8 +1,12 @@
-import authAxios from "../../utils/authAxios";
+import axios from "axios";
 
 export const getUserApi = () => {
-  return authAxios
-    .get("/user")
+  return axios
+    .get("http://localhost:2000/api/user", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })
@@ -12,8 +16,12 @@ export const getUserApi = () => {
 };
 
 export const createUserApi = (user) => {
-  return authAxios
-    .post("/auth/signup", user)
+  return axios
+    .post("http://localhost:2000/api/auth/signup", user, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })
@@ -23,8 +31,12 @@ export const createUserApi = (user) => {
 };
 
 export const updateUserApi = (user) => {
-  return authAxios
-    .put("/user", user)
+  return axios
+    .put("http://localhost:2000/api/user", user, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })
@@ -33,8 +45,12 @@ export const updateUserApi = (user) => {
     });
 };
 export const deleteUserApi = (userId) => {
-  return authAxios
-    .delete(`/user/${userId}`)
+  return axios
+    .delete(`http://localhost:2000/api/user/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })

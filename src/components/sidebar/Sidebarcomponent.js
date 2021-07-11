@@ -1,32 +1,42 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { BsCircle } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { FaChevronRight } from "react-icons/fa";
-
-const ShowMenus = ({ navlist }) => {
-  return navlist.children ? (
-    <DropDown navlist={navlist} />
-  ) : (
-    <li>
-      <Link to={navlist.link}>
-        {navlist.icons}
-        <span>{navlist.label}</span>
-      </Link>
-    </li>
-  );
-};
+import { connect } from "react-redux";
+import { IconContext } from "react-icons";
 
 const NavItem = ({ navlist, profile, permission, permission_type }) => {
+  const [group, setGroup] = useState({});
+  useEffect(() => {
+    if (profile.info && profile.info.group) {
+      setGroup(profile.info.group);
+    }
+  }, [profile]);
   return (
     <>
-      {permission && permission_type ? (
-        profile.info &&
-        profile.info.group &&
-        profile.info.group[permission_type] && <ShowMenus navlist={navlist} />
+      {permission ? (
+        group && group[permission_type] && <ShowMenus navlist={navlist} />
       ) : (
         <ShowMenus navlist={navlist} />
       )}
     </>
+  );
+};
+
+const ShowMenus = ({ navlist }) => {
+  return (
+    <IconContext.Provider value={{ size: "20px" }}>
+      {navlist.children ? (
+        <DropDown navlist={navlist} />
+      ) : (
+        <li>
+          <Link to={navlist.link}>
+            {navlist.icons}
+            <span>{navlist.label}</span>
+          </Link>
+        </li>
+      )}
+    </IconContext.Provider>
   );
 };
 
@@ -63,5 +73,9 @@ const DropDown = ({ navlist }) => {
     </li>
   );
 };
-
-export default NavItem;
+const mapStateToProps = (state) => {
+  return {
+    profile: state.profile,
+  };
+};
+export default connect(mapStateToProps, null)(NavItem);

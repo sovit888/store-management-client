@@ -1,8 +1,12 @@
-import authAxios from "../../utils/authAxios";
+import axios from "axios";
 
 export const getProfileApi = () => {
-  return authAxios
-    .get("/profile")
+  return axios
+    .get("http://localhost:2000/api/profile", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })
@@ -12,8 +16,12 @@ export const getProfileApi = () => {
 };
 
 export const updateProfileApi = (payload) => {
-  return authAxios
-    .put("/profile", payload)
+  return axios
+    .put("http://localhost:2000/api/profile", payload, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })

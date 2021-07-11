@@ -16,6 +16,8 @@ const App = () => {
                 path={value.path}
                 component={value.component}
                 key={index}
+                permission={value.permissions}
+                permission_type={value.permission_type}
               />
             );
           })}

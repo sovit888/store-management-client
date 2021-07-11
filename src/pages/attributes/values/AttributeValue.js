@@ -5,7 +5,7 @@ import CreateValue from "./CreateValue";
 import ManageValue from "./ManageValue";
 import RemoveValue from "./RemoveValue";
 import ValueTable from "./ValueTable";
-import authAxios from "../../../utils/authAxios";
+import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 const AttributeValue = () => {
@@ -13,8 +13,12 @@ const AttributeValue = () => {
   const history = useHistory();
   const { id } = useParams();
   useEffect(() => {
-    authAxios
-      .get(`/${id}/values`)
+    axios
+      .get(`http://localhost:2000/api/${id}/values`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       .then((result) => {
         setAttributeValues(result.data.attributeValues);
       })

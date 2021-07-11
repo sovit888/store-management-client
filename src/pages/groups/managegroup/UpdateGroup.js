@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import GroupForm from "./GroupForm";
 import { useHistory, useParams } from "react-router-dom";
-import authAxios from "../../../utils/authAxios";
+import axios from "axios";
 
 const UpdateGroup = () => {
   const [group, setGroup] = useState({});
@@ -9,8 +9,12 @@ const UpdateGroup = () => {
   const history = useHistory();
 
   useEffect(() => {
-    authAxios
-      .get(`/group/${id}`)
+    axios
+      .get(`http://localhost:2000/api/group/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       .then((result) => {
         setGroup(result.data.group);
       })

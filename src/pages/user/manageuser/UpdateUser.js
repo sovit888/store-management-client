@@ -48,13 +48,13 @@ const UpdateUser = ({
             <Button
               color="primary"
               className="custom-btn"
+              type="submit"
               onClick={handleSubmit}
             >
               Update
             </Button>
             <Button
               color="danger"
-              type="submit"
               className="custom-btn"
               onClick={() => toggle()}
             >

@@ -1,8 +1,12 @@
-import authAxios from "../../utils/authAxios";
+import axios from "axios";
 
 export const getStoreApi = () => {
-  return authAxios
-    .get("/store")
+  return axios
+    .get("http://localhost:2000/api/store", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })
@@ -12,8 +16,12 @@ export const getStoreApi = () => {
 };
 
 export const createStoreApi = (store) => {
-  return authAxios
-    .post("/store", store)
+  return axios
+    .post("http://localhost:2000/api/store", store, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })
@@ -23,8 +31,12 @@ export const createStoreApi = (store) => {
 };
 
 export const updateStoreApi = (store) => {
-  return authAxios
-    .put("/store", store)
+  return axios
+    .put("http://localhost:2000/api/store", store, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })
@@ -34,8 +46,12 @@ export const updateStoreApi = (store) => {
 };
 
 export const deleteStoreApi = (storeId) => {
-  return authAxios
-    .delete(`/store/${storeId}`)
+  return axios
+    .delete(`http://localhost:2000/api/store/${storeId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })

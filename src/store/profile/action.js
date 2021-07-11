@@ -1,4 +1,4 @@
-import { GET_PROFILE, UPDATE_PROFILE } from "./actionType";
+import { GET_PROFILE, UPDATE_PROFILE,REMOVE_PROFILE } from "./actionType";
 
 export const getProfile = () => {
   return {
@@ -12,3 +12,11 @@ export const updateProfile = (payload) => {
     payload: payload,
   };
 };
+
+
+export const removeProfile=()=>{
+  return {
+    type:REMOVE_PROFILE
+  }
+
+}

@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export const getProductApi = () => {
+export const getOrderApi = () => {
   return axios
-    .get("http://localhost:2000/api/product", {
+    .get("http://localhost:2000/api/order", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -11,13 +11,13 @@ export const getProductApi = () => {
       return { data: result.data };
     })
     .catch((error) => {
-      return { error: "cannot get products" };
+      return { error: "cannot get orders" };
     });
 };
 
-export const createProductApi = (payload) => {
+export const createOrderApi = (payload) => {
   return axios
-    .post("http://localhost:2000/api/product", payload, {
+    .post("http://localhost:2000/api/order", payload, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -26,13 +26,13 @@ export const createProductApi = (payload) => {
       return { data: result.data };
     })
     .catch((error) => {
-      return { error: "cannot insert products" };
+      return { error: "cannot get orders" };
     });
 };
 
-export const updateProductApi = ({ data, id }) => {
+export const updateOrderApi = ({ data, id }) => {
   return axios
-    .put(`http://localhost:2000/api/product/${id}`, data, {
+    .put(`http://localhost:2000/api/order/${id}`, data, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -41,13 +41,13 @@ export const updateProductApi = ({ data, id }) => {
       return { data: result.data };
     })
     .catch((error) => {
-      return { error: "cannot update products" };
+      return { error: "cannot get orders" };
     });
 };
 
-export const deleteProductApi = (productId) => {
+export const deleteOrderApi = (id) => {
   return axios
-    .delete(`http://localhost:2000/api/product/${productId}`, {
+    .delete(`http://localhost:2000/api/order/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -56,6 +56,6 @@ export const deleteProductApi = (productId) => {
       return { data: result.data };
     })
     .catch((error) => {
-      return { error: "cannot delete products" };
+      return { error: "cannot get orders" };
     });
 };

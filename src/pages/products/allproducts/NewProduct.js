@@ -25,7 +25,7 @@ import { useHistory } from "react-router-dom";
 
 const NewProduct = ({ newProduct }) => {
   const history = useHistory();
-  const { data } = useQuery(GET_DETAILS);
+  const { data, refetch } = useQuery(GET_DETAILS);
   const [stores, setStores] = useState([]);
   const [brands, setBrands] = useState([]);
   const [categorys, setCategorys] = useState([]);
@@ -54,6 +54,9 @@ const NewProduct = ({ newProduct }) => {
       );
     }
   }, [data]);
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
   const formik = useFormik({
     initialValues: {
       name: "",

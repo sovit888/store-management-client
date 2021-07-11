@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, ModalBody, Button } from "reactstrap";
-import authAxios from "../../../utils/authAxios";
+import axios from "axios";
 
 const RemoveValue = ({
   status,
@@ -11,12 +11,18 @@ const RemoveValue = ({
   attributes,
 }) => {
   const handleConfirm = () => {
-    authAxios.delete(`/${id}/values/${value._id}`).then((result) => {
-      let newList = [...attributes];
-      setAttributeValues(
-        newList.filter((list) => list._id !== result.data.values._id)
-      );
-    });
+    axios
+      .delete(`http://localhost:2000/api/${id}/values/${value._id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((result) => {
+        let newList = [...attributes];
+        setAttributeValues(
+          newList.filter((list) => list._id !== result.data.values._id)
+        );
+      });
     toggle();
   };
   return (

@@ -7,6 +7,7 @@ import categorysReducer from "./category/reducer";
 import storesReducer from "./stores/reducer";
 import attributesReducer from "./attribute/reducer";
 import productsReducer from "./product/reducer";
+import ordersReducer from "./order/reducer";
 
 const rootReducer = combineReducers({
   profile: profileReducer,
@@ -17,5 +18,6 @@ const rootReducer = combineReducers({
   stores: storesReducer,
   attributes: attributesReducer,
   products: productsReducer,
+  orders: ordersReducer,
 });
 export default rootReducer;

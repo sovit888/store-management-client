@@ -1,20 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useRef } from "react";
 import { useParams } from "react-router-dom";
 import Order from "./Order";
+import ReactToPrint from "react-to-print";
 import { Button } from "reactstrap";
 
 const PrintOrder = () => {
   const { id } = useParams();
-  useEffect(() => {
-    console.log(id);
-  }, [id]);
+  const componentRef = useRef();
+
   return (
     <>
       <h4>Print Order</h4>
-      <Order />
-      <Button color="primary" className="custom-btn mt-3">
-        Print
-      </Button>
+
+      <Order id={id} ref={componentRef} />
+      <ReactToPrint
+        content={() => componentRef.current}
+        trigger={() => (
+          <Button className="mt-3 custom-btn" color="primary">
+            Print
+          </Button>
+        )}
+      />
     </>
   );
 };

@@ -1,8 +1,12 @@
-import authAxios from "../../utils/authAxios";
+import axios from "axios";
 
 export const getAttributeApi = () => {
-  return authAxios
-    .get("/attribute")
+  return axios
+    .get("http://localhost:2000/api/attribute", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })
@@ -12,8 +16,12 @@ export const getAttributeApi = () => {
 };
 
 export const createAttributeApi = (attribute) => {
-  return authAxios
-    .post("/attribute", attribute)
+  return axios
+    .post("http://localhost:2000/api/attribute", attribute, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })
@@ -23,8 +31,12 @@ export const createAttributeApi = (attribute) => {
 };
 
 export const updateAttributeApi = (attribute) => {
-  return authAxios
-    .put("/attribute", attribute)
+  return axios
+    .put("http://localhost:2000/api/attribute", attribute, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })
@@ -34,8 +46,12 @@ export const updateAttributeApi = (attribute) => {
 };
 
 export const deleteAttributeApi = (attributeId) => {
-  return authAxios
-    .delete(`/attribute/${attributeId}`)
+  return axios
+    .delete(`http://localhost:2000/api/attribute/${attributeId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })

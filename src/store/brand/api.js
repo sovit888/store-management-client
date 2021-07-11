@@ -1,8 +1,12 @@
-import authAxios from "../../utils/authAxios";
+import axios from "axios";
 
 export const getBrandApi = () => {
-  return authAxios
-    .get("/brand")
+  return axios
+    .get("http://localhost:2000/api/brand", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })
@@ -12,8 +16,12 @@ export const getBrandApi = () => {
 };
 
 export const createBrandApi = (brand) => {
-  return authAxios
-    .post("/brand", brand)
+  return axios
+    .post("http://localhost:2000/api/brand", brand, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })
@@ -23,8 +31,12 @@ export const createBrandApi = (brand) => {
 };
 
 export const updateBrandApi = (brand) => {
-  return authAxios
-    .put("/brand", brand)
+  return axios
+    .put("http://localhost:2000/api/brand", brand, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })
@@ -34,8 +46,12 @@ export const updateBrandApi = (brand) => {
 };
 
 export const deleteBrandApi = (brandId) => {
-  return authAxios
-    .delete(`/brand/${brandId}`)
+  return axios
+    .delete(`http://localhost:2000/api/brand/${brandId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })

@@ -1,8 +1,12 @@
-import authAxios from "../../utils/authAxios";
+import axios from "axios";
 
 export const getCategoryApi = () => {
-  return authAxios
-    .get("/category")
+  return axios
+    .get("http://localhost:2000/api/category", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })
@@ -12,8 +16,12 @@ export const getCategoryApi = () => {
 };
 
 export const createCategoryApi = (category) => {
-  return authAxios
-    .post("/category", category)
+  return axios
+    .post("http://localhost:2000/api/category", category, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })
@@ -23,8 +31,12 @@ export const createCategoryApi = (category) => {
 };
 
 export const updateCategoryApi = (category) => {
-  return authAxios
-    .put("/category", category)
+  return axios
+    .put("http://localhost:2000/api/category", category, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })
@@ -34,8 +46,12 @@ export const updateCategoryApi = (category) => {
 };
 
 export const deleteCategoryApi = (categoryId) => {
-  return authAxios
-    .delete(`/category/${categoryId}`)
+  return axios
+    .delete(`http://localhost:2000/api/category/${categoryId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })

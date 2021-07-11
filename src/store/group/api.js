@@ -1,8 +1,12 @@
-import authAxios from "../../utils/authAxios";
+import axios from "axios";
 
 export const getGroupApi = () => {
-  return authAxios
-    .get("/group")
+  return axios
+    .get("http://localhost:2000/api/group", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })
@@ -12,8 +16,12 @@ export const getGroupApi = () => {
 };
 
 export const createGroupApi = (group) => {
-  return authAxios
-    .post("/group", group)
+  return axios
+    .post("http://localhost:2000/api/group", group, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })
@@ -23,8 +31,12 @@ export const createGroupApi = (group) => {
 };
 
 export const updateGroupApi = (group) => {
-  return authAxios
-    .put("/group", group)
+  return axios
+    .put("http://localhost:2000/api/group", group, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })
@@ -34,8 +46,12 @@ export const updateGroupApi = (group) => {
 };
 
 export const deleteGroupApi = (groupId) => {
-  return authAxios
-    .delete(`/group/${groupId}`)
+  return axios
+    .delete(`http://localhost:2000/api/group/${groupId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
     .then((response) => {
       return { data: response.data };
     })

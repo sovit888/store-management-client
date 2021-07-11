@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { ModalBody, Modal } from "reactstrap";
 import valueValidation from "./valueValidation";
 import ValueForm from "./ValueForm";
-import authAxios from "../../../utils/authAxios";
+import axios from "axios";
 
 const CreateValue = ({
   status,
@@ -20,8 +20,16 @@ const CreateValue = ({
     validationSchema: valueValidation,
     onSubmit: (values, { resetForm }) => {
       values.status = values.status === "true" ? true : false;
-      authAxios
-        .post(`/${id}/values`, { ...values, attribute: id })
+      axios
+        .post(
+          `http://localhost:2000/api/${id}/values`,
+          { ...values, attribute: id },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        )
         .then((result) => {
           setAttributeValues([result.data.value, ...attributeValues]);
         });

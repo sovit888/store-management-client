@@ -11,8 +11,12 @@ import { useFormik } from "formik";
 import { GET_DETAILS } from "./query";
 import { useQuery } from "@apollo/client";
 import formValidation from "./formValidation";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { createOrder } from "../../../store/action";
 
-const OrderForm = () => {
+const OrderForm = ({ newOrder }) => {
+  const history = useHistory();
   const [products, setProducts] = useState([]);
   const [quantity, setQuantity] = useState(null);
   const [price, setPrice] = useState(null);
@@ -32,7 +36,11 @@ const OrderForm = () => {
     },
     validationSchema: formValidation,
     onSubmit: (values) => {
-      console.log(values);
+      let total = ((price * quantity - 0.1 * price * quantity) * 1.13).toFixed(
+        2
+      );
+      newOrder({ ...values, total });
+      history.push("/order/manage");
     },
   });
   useEffect(() => {
@@ -90,7 +98,7 @@ const OrderForm = () => {
               name="rate"
               id="rate"
               label="Rate"
-              value={price != null ? price : null}
+              value={price != null ? price : ""}
             />
           </Col>
           <Col>
@@ -98,9 +106,7 @@ const OrderForm = () => {
               name="amount"
               id="amount"
               label="Amount"
-              value={
-                price != null && quantity != null ? price * quantity : null
-              }
+              value={price != null && quantity != null ? price * quantity : ""}
             />
           </Col>
         </Row>
@@ -111,9 +117,7 @@ const OrderForm = () => {
               id="discount"
               label="Discount"
               value={
-                price != null && quantity != null
-                  ? 0.1 * price * quantity
-                  : null
+                price != null && quantity != null ? 0.1 * price * quantity : ""
               }
             />
           </Col>
@@ -128,7 +132,7 @@ const OrderForm = () => {
                       (price * quantity - 0.1 * price * quantity) *
                       0.13
                     ).toFixed(2)
-                  : null
+                  : ""
               }
             />
           </Col>
@@ -143,7 +147,7 @@ const OrderForm = () => {
                       (price * quantity - 0.1 * price * quantity) *
                       1.13
                     ).toFixed(2)
-                  : null
+                  : ""
               }
             />
           </Col>
@@ -155,5 +159,9 @@ const OrderForm = () => {
     </>
   );
 };
-
-export default OrderForm;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    newOrder: (payload) => dispatch(createOrder(payload)),
+  };
+};
+export default connect(null, mapDispatchToProps)(OrderForm);

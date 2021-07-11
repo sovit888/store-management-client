@@ -1,29 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MDBDataTable, MDBTooltip } from "mdbreact";
-import { FaPrint, FaPen } from "react-icons/fa";
+import { FaPrint, FaPen, FaTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { getOrder } from "../../../store/action";
 const show = (status) => {
   return status ? (
-    <npiadspan className="bg-success p-1 text-white rounded-border">
-      Paid
-    </npiadspan>
+    <span className="bg-success p-1 text-white rounded-border">Paid</span>
   ) : (
     <span className="bg-warning p-1 rounded-border">Unpaid</span>
   );
 };
 
-const orderLists = [
-  {
-    customer_name: "Sovit Thapa",
-    customer_address: "Jamune",
-    total_products: 10,
-    total_amounts: 2000,
-    paid_status: false,
-    _id: 14,
-  },
-];
-
-const OrderTable = () => {
+const OrderTable = ({
+  orders,
+  loadOrder,
+  setOrder,
+  handleUpdate,
+  handleRemove,
+}) => {
+  useEffect(() => {
+    loadOrder();
+  }, [loadOrder]);
   const data = {
     columns: [
       {
@@ -37,18 +35,13 @@ const OrderTable = () => {
         width: 200,
       },
       {
-        label: "Date Time",
-        field: "date",
+        label: "Products",
+        field: "name",
         width: 200,
       },
       {
-        label: "Total Products",
-        field: "total_products",
-        width: 200,
-      },
-      {
-        label: "Total Amounts",
-        field: "total_amounts",
+        label: "Total",
+        field: "total",
         width: 200,
       },
       {
@@ -63,14 +56,13 @@ const OrderTable = () => {
       },
     ],
     rows: [
-      ...orderLists.map((value) => {
+      ...orders.lists.map((value) => {
         return {
           customer_name: value.customer_name,
           customer_address: value.customer_address,
-          date: Date.now(),
-          total_products: value.total_products,
-          total_amounts: value.total_amounts,
-          status: show(value.paid_status),
+          name: value.product.name,
+          total: value.total,
+          status: show(value.status),
           operations: (
             <>
               <MDBTooltip domElement placement="left">
@@ -82,17 +74,29 @@ const OrderTable = () => {
                 <div>Print Order</div>
               </MDBTooltip>
 
-              <MDBTooltip domElement placement="right">
+              <MDBTooltip domElement placement="top">
                 <span
                   className="p-2 bg-primary text-white"
                   onClick={(e) => {
-                    // setAttribute(value);
-                    // handleUpdate();
+                    setOrder(value);
+                    handleUpdate();
                   }}
                 >
                   <FaPen />
                 </span>
                 <div>Edit Order</div>
+              </MDBTooltip>
+              <MDBTooltip domElement placement="right">
+                <span
+                  className="p-2 bg-danger text-white ml-2"
+                  onClick={(e) => {
+                    setOrder(value);
+                    handleRemove();
+                  }}
+                >
+                  <FaTrashAlt />
+                </span>
+                <div>Delete Order</div>
               </MDBTooltip>
             </>
           ),
@@ -113,5 +117,16 @@ const OrderTable = () => {
     </>
   );
 };
+const mapStateToProps = (state) => {
+  return {
+    orders: state.orders,
+  };
+};
 
-export default OrderTable;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadOrder: () => dispatch(getOrder()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrderTable);

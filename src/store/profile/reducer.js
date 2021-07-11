@@ -3,6 +3,7 @@ import {
   GET_PROFILE_SUCCESS,
   GET_PROFILE_ERROR,
   UPDATE_PROFILE_SUCCESS,
+  REMOVE_PROFILE_SUCCESS,
 } from "./actionType";
 
 const initailState = {
@@ -21,6 +22,8 @@ const profileReducer = (state = initailState, action) => {
       return { ...state, loading: false, error: action.payload };
     case UPDATE_PROFILE_SUCCESS:
       return { loading: false, error: null, info: action.payload };
+    case REMOVE_PROFILE_SUCCESS:
+      return initailState;
     default:
       return state;
   }

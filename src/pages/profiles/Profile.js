@@ -1,13 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Card, CardBody } from "reactstrap";
 import { connect } from "react-redux";
-import { getProfile } from "../../store/action";
 import "./profile.css";
 
 const Profile = ({ profile, loadProfile }) => {
-  useEffect(() => {
-    loadProfile();
-  }, [loadProfile]);
   return (
     <>
       <h3>Profile</h3>
@@ -39,7 +35,5 @@ const Profile = ({ profile, loadProfile }) => {
 const mapStateToProps = (state) => {
   return { profile: state.profile };
 };
-const mapDispatchToProps = (dispatch) => {
-  return { loadProfile: () => dispatch(getProfile()) };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+
+export default connect(mapStateToProps, null)(Profile);

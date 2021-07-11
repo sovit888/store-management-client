@@ -6,3 +6,4 @@ export * from "./category/action";
 export * from "./stores/action";
 export * from "./attribute/action";
 export * from "./product/action";
+export * from "./order/action";
